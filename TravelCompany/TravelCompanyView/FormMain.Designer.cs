@@ -39,6 +39,8 @@ namespace TravelCompanyView
             this.toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.travelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.warehousesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.warehouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -118,7 +120,9 @@ namespace TravelCompanyView
             // 
             this.toolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.conditionToolStripMenuItem,
-            this.travelToolStripMenuItem});
+            this.travelToolStripMenuItem,
+            this.warehousesToolStripMenuItem,
+            this.warehouseToolStripMenuItem});
             this.toolStripMenuItem.Name = "toolStripMenuItem";
             this.toolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItem.Text = "Справочники";
@@ -134,6 +138,18 @@ namespace TravelCompanyView
             this.travelToolStripMenuItem.Name = "travelToolStripMenuItem";
             this.travelToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
             this.travelToolStripMenuItem.Text = "Туристические путевки";
+            // 
+            // warehousesToolStripMenuItem
+            // 
+            this.warehousesToolStripMenuItem.Name = "warehousesToolStripMenuItem";
+            this.warehousesToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.warehousesToolStripMenuItem.Text = "Склады";
+            // 
+            // warehouseToolStripMenuItem
+            // 
+            this.warehouseToolStripMenuItem.Name = "warehouseToolStripMenuItem";
+            this.warehouseToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.warehouseToolStripMenuItem.Text = "Пополнить склад";
             // 
             // FormMain
             // 
@@ -170,6 +186,8 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem conditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem travelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem warehousesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem warehouseToolStripMenuItem;
     }
 }
 

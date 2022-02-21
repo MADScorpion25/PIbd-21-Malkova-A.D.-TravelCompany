@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TravelCompanyBusinessLogic.BusinessLogics;
 using TravelCompanyContracts.BusinessLogicsContracts;
@@ -46,12 +43,16 @@ namespace TravelCompanyView
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<ITravelStorage, TravelStorage>(new
             HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IWarehouseStorage, WarehouseStorage>(new
+            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IConditionLogic, ConditionLogic>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<ITravelLogic, TravelLogic>(new
             HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IWarehouseLogic, WarehouseLogic>(new
+               HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

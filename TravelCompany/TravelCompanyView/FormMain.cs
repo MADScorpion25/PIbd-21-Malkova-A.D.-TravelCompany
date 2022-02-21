@@ -17,6 +17,8 @@ namespace TravelCompanyView
             {
                 mainItem.DropDownItems[0].Click += conditionsToolStripMenuItem_Click;
                 mainItem.DropDownItems[1].Click += travelsToolStripMenuItem_Click;
+                mainItem.DropDownItems[2].Click += warehousesToolStripMenuItem_Click;
+                mainItem.DropDownItems[3].Click += warehouseAddToolStripMenuItem_Click;
             }
         }
 
@@ -52,7 +54,16 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormTravels>();
             form.ShowDialog();
         }
-
+        private void warehousesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormWarehouses>();
+            form.ShowDialog();
+        }
+        private void warehouseAddToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormWarehouseCondition>();
+            form.ShowDialog();
+        }
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();

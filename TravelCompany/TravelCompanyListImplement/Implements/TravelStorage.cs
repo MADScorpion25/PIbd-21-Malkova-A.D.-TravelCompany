@@ -106,7 +106,6 @@ namespace TravelCompanyListImplement.Implements
         {
             travel.TravelName = model.TravelName;
             travel.Price = model.Price;
-            // удаляем убранные
             foreach (var key in travel.TravelConditions.Keys.ToList())
             {
                 if (!model.TravelConditions.ContainsKey(key))
@@ -114,7 +113,6 @@ namespace TravelCompanyListImplement.Implements
                     travel.TravelConditions.Remove(key);
                 }
             }
-            // обновляем существуюущие и добавляем новые
             foreach (var component in model.TravelConditions)
             {
                 if (travel.TravelConditions.ContainsKey(component.Key))
@@ -132,7 +130,6 @@ namespace TravelCompanyListImplement.Implements
         }
         private TravelViewModel CreateModel(Travel Travel)
         {
-            // требуется дополнительно получить список компонентов для изделия с названиями и их количество
             var TravelConditions = new Dictionary<int, (string, int)>();
             foreach (var pc in Travel.TravelConditions)
             {
