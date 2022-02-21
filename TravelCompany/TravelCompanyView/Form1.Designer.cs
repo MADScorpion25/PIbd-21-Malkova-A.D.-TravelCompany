@@ -1,5 +1,5 @@
 ﻿
-namespace TravelCompany
+namespace TravelCompanyView
 {
     partial class Form1
     {
