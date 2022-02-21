@@ -13,7 +13,7 @@ namespace TravelCompanyView
         public int Id { set { id = value; } }
         private readonly ITravelLogic _logic;
         private int? id;
-        private Dictionary<int, (string, int)> TravelConditions;
+        private Dictionary<int, (string, int)> travelConditions;
         public FormTravel(ITravelLogic logic)
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace TravelCompanyView
                     {
                         textBoxName.Text = view.TravelName;
                         textBoxPrice.Text = view.Price.ToString();
-                        TravelConditions = view.TravelConditions;
+                        travelConditions = view.TravelConditions;
                         LoadData();
                     }
                 }
@@ -47,17 +47,17 @@ namespace TravelCompanyView
             }
             else
             {
-                TravelConditions = new Dictionary<int, (string, int)>();
+                travelConditions = new Dictionary<int, (string, int)>();
             }
         }
         private void LoadData()
         {
             try
             {
-                if (TravelConditions != null)
+                if (travelConditions != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var pc in TravelConditions)
+                    foreach (var pc in travelConditions)
                     {
                         dataGridView.Rows.Add(new object[] { pc.Key, pc.Value.Item1, pc.Value.Item2 });
                     }
@@ -75,13 +75,13 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormTravelCondition>();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                if (TravelConditions.ContainsKey(form.Id))
+                if (travelConditions.ContainsKey(form.Id))
                 {
-                    TravelConditions[form.Id] = (form.ConditionName, form.Count);
+                    travelConditions[form.Id] = (form.ConditionName, form.Count);
                 }
                 else
                 {
-                    TravelConditions.Add(form.Id, (form.ConditionName, form.Count));
+                    travelConditions.Add(form.Id, (form.ConditionName, form.Count));
                 }
                 LoadData();
             }
@@ -102,7 +102,7 @@ namespace TravelCompanyView
                     try
                     {
 
-                        TravelConditions.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
+                        travelConditions.Remove(Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value));
                     }
                     catch (Exception ex)
                     {
@@ -121,10 +121,10 @@ namespace TravelCompanyView
                 var form = Program.Container.Resolve<FormTravelCondition>();
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 form.Id = id;
-                form.Count = TravelConditions[id].Item2;
+                form.Count = travelConditions[id].Item2;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    TravelConditions[form.Id] = (form.ConditionName, form.Count);
+                    travelConditions[form.Id] = (form.ConditionName, form.Count);
                     LoadData();
                 }
             }
@@ -143,7 +143,7 @@ namespace TravelCompanyView
                MessageBoxIcon.Error);
                 return;
             }
-            if (TravelConditions == null || TravelConditions.Count == 0)
+            if (travelConditions == null || travelConditions.Count == 0)
             {
                 MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
@@ -156,7 +156,7 @@ namespace TravelCompanyView
                     Id = id,
                     TravelName = textBoxName.Text,
                     Price = Convert.ToDecimal(textBoxPrice.Text),
-                    TravelConditions = TravelConditions
+                    TravelConditions = travelConditions
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
