@@ -89,7 +89,18 @@ namespace TravelCompanyView
 
         private void ButtonChange_Click(object sender, EventArgs e)
         {
-            LoadData();
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = Program.Container.Resolve<FormTravelCondition>();
+                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                form.Id = id;
+                form.Count = travelConditions[id].Item2;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    travelConditions[form.Id] = (form.ConditionName, form.Count);
+                    LoadData();
+                }
+            }
         }
 
         private void ButtonDelete_Click(object sender, EventArgs e)
@@ -116,18 +127,7 @@ namespace TravelCompanyView
 
         private void ButtonUpdate_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = Program.Container.Resolve<FormTravelCondition>();
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                form.Id = id;
-                form.Count = travelConditions[id].Item2;
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    travelConditions[form.Id] = (form.ConditionName, form.Count);
-                    LoadData();
-                }
-            }
+            LoadData();
         }
 
         private void ButtonSave_Click(object sender, EventArgs e)
