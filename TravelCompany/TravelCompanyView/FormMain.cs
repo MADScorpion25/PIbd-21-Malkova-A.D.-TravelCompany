@@ -124,7 +124,6 @@ namespace TravelCompanyView
         {
             LoadData();
         }
-
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             FileDataListSingleton.GetInstance().Save();

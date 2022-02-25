@@ -28,12 +28,6 @@ namespace TravelCompanyFileImplement.Models
             SaveOrders();
             SaveTravels();
         }
-        ~FileDataListSingleton()
-        {
-            SaveConditions();
-            SaveOrders();
-            SaveTravels();
-        }
         public static FileDataListSingleton GetInstance()
         {
             if (instance == null)
