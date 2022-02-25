@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using TravelCompanyBusinessLogic.BusinessLogics;
 using TravelCompanyContracts.BindingModels;
+using TravelCompanyFileImplement.Models;
 using Unity;
 
 namespace TravelCompanyView
@@ -139,6 +140,10 @@ namespace TravelCompanyView
         private void ButtonUpdateList_Click(object sender, EventArgs e)
         {
             LoadData();
+        }
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            FileDataListSingleton.GetInstance().Save();
         }
     }
 }

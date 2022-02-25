@@ -165,6 +165,7 @@ namespace TravelCompanyView
             this.Controls.Add(this.menuStrip);
             this.Name = "FormMain";
             this.Text = "Туристическая фирма";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.menuStrip.ResumeLayout(false);
