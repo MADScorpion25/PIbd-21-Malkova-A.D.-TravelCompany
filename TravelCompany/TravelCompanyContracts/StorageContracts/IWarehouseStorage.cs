@@ -12,5 +12,6 @@ namespace TravelCompanyContracts.StorageContracts
         void Insert(WarehouseBindingModel model);
         void Update(WarehouseBindingModel model);
         void Delete(WarehouseBindingModel model);
+        bool TakeConditionFromWarehouse(Dictionary<int, (string, int)> conditions, int orderCount);
     }
 }

@@ -11,9 +11,13 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        public OrderLogic(IOrderStorage orderStorage)
+        private readonly IWarehouseStorage _warehouseStorage;
+        private readonly ITravelStorage _travelStorage;
+        public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, ITravelStorage travelStorage)
         {
             _orderStorage = orderStorage;
+            _warehouseStorage = warehouseStorage;
+            _travelStorage = travelStorage;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -96,6 +100,10 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             if (order.Status != OrderStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
+            }
+            if(!_warehouseStorage.TakeConditionFromWarehouse(_travelStorage.GetElement(new TravelBindingModel { Id = order.TravelId}).TravelConditions, order.Count))
+            {
+                throw new Exception("Недостаточно условий для принятия в работу заказа");
             }
             _orderStorage.Update(new OrderBindingModel
             {

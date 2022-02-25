@@ -13,20 +13,24 @@ namespace TravelCompanyFileImplement.Models
         private readonly string ConditionFileName = "D:\\DataXML\\Condition.xml";
         private readonly string OrderFileName = "D:\\DataXML\\Order.xml";
         private readonly string TravelFileName = "D:\\DataXML\\Travel.xml";
+        private readonly string WarehouseFileName = "D:\\DataXML\\Warehouse.xml";
         public List<Condition> Conditions { get; set; }
         public List<Order> Orders { get; set; }
         public List<Travel> Travels { get; set; }
+        public List<Warehouse> Warehouses { get; set; }
         private FileDataListSingleton()
         {
             Conditions = LoadConditions();
             Orders = LoadOrders();
             Travels = LoadTravels();
+            Warehouses = LoadWarehouses();
         }
         public void Save()
         {
             SaveConditions();
             SaveOrders();
             SaveTravels();
+            SaveWarehouses();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -105,6 +109,33 @@ namespace TravelCompanyFileImplement.Models
             }
             return list;
         }
+        private List<Warehouse> LoadWarehouses()
+        {
+            var list = new List<Warehouse>();
+            if (File.Exists(WarehouseFileName))
+            {
+                var xDocument = XDocument.Load(WarehouseFileName);
+                var xElements = xDocument.Root.Elements("Warehouse").ToList();
+                foreach(var elem in xElements)
+                {
+                    var prodComp = new Dictionary<int, int>();
+                    foreach (var condition in elem.Element("WarehouseConditions").Elements("WarehouseCondition").ToList())
+                    {
+                        prodComp.Add(Convert.ToInt32(condition.Element("Key").Value),
+                       Convert.ToInt32(condition.Element("Value").Value));
+                    }
+                    list.Add(new Warehouse
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        WarehouseName = elem.Element("WarehouseName").Value,
+                        ResponsibleFullName = elem.Element("ResponsibleFullName").Value,
+                        CreateDate = Convert.ToDateTime(elem.Element("CreateDate").Value),
+                        WarehouseConditions = prodComp
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveConditions()
         {
             if (Conditions != null)
@@ -162,6 +193,31 @@ namespace TravelCompanyFileImplement.Models
                 }
                 var xDocument = new XDocument(xElement);
                 xDocument.Save(TravelFileName);
+            }
+        }
+        private void SaveWarehouses()
+        {
+            if(Warehouses != null)
+            {
+                var xElement = new XElement("Warehouses");
+                foreach(var warehouse in Warehouses)
+                {
+                    var warehouseElement = new XElement("WarehouseConditions");
+                    foreach(var condition in warehouse.WarehouseConditions)
+                    {
+                        warehouseElement.Add(new XElement("WarehouseCondition",
+                            new XElement("Key", condition.Key),
+                            new XElement("Value", condition.Value)));
+                    }
+                    xElement.Add(new XElement("Warehouse",
+                        new XAttribute("Id", warehouse.Id),
+                        new XElement("WarehouseName", warehouse.WarehouseName),
+                        new XElement("CreateDate", warehouse.CreateDate),
+                        new XElement("ResponsibleFullName", warehouse.ResponsibleFullName),
+                        warehouseElement));
+                }
+                var xDocument = new XDocument(xElement);
+                xDocument.Save(WarehouseFileName);
             }
         }
     }

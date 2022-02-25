@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using TravelCompanyBusinessLogic.BusinessLogics;
 using TravelCompanyContracts.BusinessLogicsContracts;
 using TravelCompanyContracts.StorageContracts;
+using TravelCompanyFileImplement.Models;
 using TravelCompanyFileImplement.Implements;
 using Unity;
 using Unity.Lifetime;
