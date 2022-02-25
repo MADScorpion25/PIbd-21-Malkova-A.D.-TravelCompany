@@ -22,6 +22,12 @@ namespace TravelCompanyFileImplement.Models
             Orders = LoadOrders();
             Travels = LoadTravels();
         }
+        public void Save()
+        {
+            SaveConditions();
+            SaveOrders();
+            SaveTravels();
+        }
         ~FileDataListSingleton()
         {
             SaveConditions();
