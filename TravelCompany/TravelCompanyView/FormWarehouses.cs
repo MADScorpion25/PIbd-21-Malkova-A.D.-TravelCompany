@@ -50,7 +50,15 @@ namespace TravelCompanyView
 
         private void ButtonChange_Click(object sender, EventArgs e)
         {
-            LoadData();
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = Program.Container.Resolve<FormWarehouse>();
+                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
         }
 
         private void ButtonDelete_Click(object sender, EventArgs e)
@@ -78,15 +86,7 @@ namespace TravelCompanyView
 
         private void ButtonUpdate_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = Program.Container.Resolve<FormWarehouse>();
-                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
-            }
+            LoadData();
         }
     }
 }

@@ -15,10 +15,16 @@ namespace TravelCompanyView
             _orderLogic = orderLogic;
             foreach (ToolStripMenuItem mainItem in menuStrip.Items)
             {
-                mainItem.DropDownItems[0].Click += conditionsToolStripMenuItem_Click;
-                mainItem.DropDownItems[1].Click += travelsToolStripMenuItem_Click;
-                mainItem.DropDownItems[2].Click += warehousesToolStripMenuItem_Click;
-                mainItem.DropDownItems[3].Click += warehouseAddToolStripMenuItem_Click;
+                if (mainItem.Text.Equals("Справочники"))
+                {
+                    mainItem.DropDownItems[0].Click += conditionsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[1].Click += travelsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[2].Click += warehousesToolStripMenuItem_Click;
+                }
+                else
+                {
+                    mainItem.Click += warehouseAddToolStripMenuItem_Click;
+                }
             }
         }
 
