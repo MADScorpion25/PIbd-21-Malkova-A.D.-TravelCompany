@@ -18,9 +18,9 @@ namespace TravelCompanyListImplement.Implements
         public List<TravelViewModel> GetFullList()
         {
             var result = new List<TravelViewModel>();
-            foreach (var component in source.Travels)
+            foreach (var condition in source.Travels)
             {
-                result.Add(CreateModel(component));
+                result.Add(CreateModel(condition));
             }
             return result;
         }
@@ -106,7 +106,6 @@ namespace TravelCompanyListImplement.Implements
         {
             travel.TravelName = model.TravelName;
             travel.Price = model.Price;
-            // удаляем убранные
             foreach (var key in travel.TravelConditions.Keys.ToList())
             {
                 if (!model.TravelConditions.ContainsKey(key))
@@ -114,38 +113,36 @@ namespace TravelCompanyListImplement.Implements
                     travel.TravelConditions.Remove(key);
                 }
             }
-            // обновляем существуюущие и добавляем новые
-            foreach (var component in model.TravelConditions)
+            foreach (var condition in model.TravelConditions)
             {
-                if (travel.TravelConditions.ContainsKey(component.Key))
+                if (travel.TravelConditions.ContainsKey(condition.Key))
                 {
-                    travel.TravelConditions[component.Key] =
-                    model.TravelConditions[component.Key].Item2;
+                    travel.TravelConditions[condition.Key] =
+                    model.TravelConditions[condition.Key].Item2;
                 }
                 else
                 {
-                    travel.TravelConditions.Add(component.Key,
-                    model.TravelConditions[component.Key].Item2);
+                    travel.TravelConditions.Add(condition.Key,
+                    model.TravelConditions[condition.Key].Item2);
                 }
             }
             return travel;
         }
         private TravelViewModel CreateModel(Travel Travel)
         {
-            // требуется дополнительно получить список компонентов для изделия с названиями и их количество
             var TravelConditions = new Dictionary<int, (string, int)>();
             foreach (var pc in Travel.TravelConditions)
             {
-                string componentName = string.Empty;
-                foreach (var component in source.Conditions)
+                string conditionName = string.Empty;
+                foreach (var condition in source.Conditions)
                 {
-                    if (pc.Key == component.Id)
+                    if (pc.Key == condition.Id)
                     {
-                        componentName = component.ConditionName;
+                        conditionName = condition.ConditionName;
                         break;
                     }
                 }
-                TravelConditions.Add(pc.Key, (componentName, pc.Value));
+                TravelConditions.Add(pc.Key, (conditionName, pc.Value));
             }
             return new TravelViewModel
             {
