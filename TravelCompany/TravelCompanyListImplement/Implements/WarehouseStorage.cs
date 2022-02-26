@@ -65,9 +65,9 @@ namespace TravelCompanyListImplement.Implements
         public List<WarehouseViewModel> GetFullList()
         {
             var result = new List<WarehouseViewModel>();
-            foreach (var component in source.Warehouses)
+            foreach (var condition in source.Warehouses)
             {
-                result.Add(CreateModel(component));
+                result.Add(CreateModel(condition));
             }
             return result;
         }
@@ -111,16 +111,16 @@ namespace TravelCompanyListImplement.Implements
             var warehouseConditions = new Dictionary<int, (string, int)>();
             foreach (var warehouseCondition in warehouse.WarehouseConditions)
             {
-                string componentName = string.Empty;
-                foreach (var component in source.Conditions)
+                string conditionName = string.Empty;
+                foreach (var condition in source.Conditions)
                 {
-                    if (warehouseCondition.Key == component.Id)
+                    if (warehouseCondition.Key == condition.Id)
                     {
-                        componentName = component.ConditionName;
+                        conditionName = condition.ConditionName;
                         break;
                     }
                 }
-                warehouseConditions.Add(warehouseCondition.Key, (componentName, warehouseCondition.Value));
+                warehouseConditions.Add(warehouseCondition.Key, (conditionName, warehouseCondition.Value));
             }
             return new WarehouseViewModel
             {
@@ -144,15 +144,15 @@ namespace TravelCompanyListImplement.Implements
                     warehouse.WarehouseConditions.Remove(key);
                 }
             }
-            foreach (var component in model.WarehouseConditions)
+            foreach (var condition in model.WarehouseConditions)
             {
-                if (warehouse.WarehouseConditions.ContainsKey(component.Key))
+                if (warehouse.WarehouseConditions.ContainsKey(condition.Key))
                 {
-                    warehouse.WarehouseConditions[component.Key] = model.WarehouseConditions[component.Key].Item2;
+                    warehouse.WarehouseConditions[condition.Key] = model.WarehouseConditions[condition.Key].Item2;
                 }
                 else
                 {
-                    warehouse.WarehouseConditions.Add(component.Key, model.WarehouseConditions[component.Key].Item2);
+                    warehouse.WarehouseConditions.Add(condition.Key, model.WarehouseConditions[condition.Key].Item2);
                 }
             }
             return warehouse;
