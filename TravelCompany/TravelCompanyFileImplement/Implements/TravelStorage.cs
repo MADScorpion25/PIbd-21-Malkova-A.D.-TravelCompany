@@ -80,7 +80,6 @@ namespace TravelCompanyFileImplement.Implements
         {
             travel.TravelName = model.TravelName;
             travel.Price = model.Price;
-            // удаляем убранные
             foreach (var key in travel.TravelConditions.Keys.ToList())
             {
                 if (!model.TravelConditions.ContainsKey(key))
@@ -88,18 +87,17 @@ namespace TravelCompanyFileImplement.Implements
                     travel.TravelConditions.Remove(key);
                 }
             }
-            // обновляем существуюущие и добавляем новые
-            foreach (var component in model.TravelConditions)
+            foreach (var condition in model.TravelConditions)
             {
-                if (travel.TravelConditions.ContainsKey(component.Key))
+                if (travel.TravelConditions.ContainsKey(condition.Key))
                 {
-                    travel.TravelConditions[component.Key] =
-                    model.TravelConditions[component.Key].Item2;
+                    travel.TravelConditions[condition.Key] =
+                    model.TravelConditions[condition.Key].Item2;
                 }
                 else
                 {
-                    travel.TravelConditions.Add(component.Key,
-                    model.TravelConditions[component.Key].Item2);
+                    travel.TravelConditions.Add(condition.Key,
+                    model.TravelConditions[condition.Key].Item2);
                 }
             }
             return travel;
