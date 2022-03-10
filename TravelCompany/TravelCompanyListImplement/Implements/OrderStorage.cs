@@ -112,6 +112,7 @@ namespace TravelCompanyListImplement.Implements
                 if (travel.Id == order.TravelId)
                 {
                     travelName = travel.TravelName;
+                    break;
                 }
             }
             return new OrderViewModel
