@@ -9,7 +9,7 @@ namespace TravelCompanyDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=TravelCompanyDatabase;Username=postgres;Password=MADScorpion");
+                optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-GGPI73LN\SQLEXPRESS;Initial Catalog=TravelCompanyDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
         }
