@@ -75,7 +75,7 @@ namespace TravelCompanyFileImplement.Implements
             foreach(var condition in conditions)
             {
                 int count = source.Warehouses
-                    .Where(travel => travel.WarehouseConditions.ContainsKey(condition.Key)).Sum(travel => travel.WarehouseConditions[condition.Key]);
+                    .Where(rec => rec.WarehouseConditions.ContainsKey(condition.Key)).Sum(rec => rec.WarehouseConditions[condition.Key]);
                 if (count < condition.Value.Item2 * orderCount)
                 {
                     return false;
