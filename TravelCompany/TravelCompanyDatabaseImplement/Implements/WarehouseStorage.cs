@@ -129,7 +129,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                         .Where(warehouse => warehouse.ConditionId == warehouseCondition.Key);
 
                     int totalCount = warehouseConditions.Sum(warehouse => warehouse.Count);
-                    foreach (WarehouseCondition component in warehouseConditions)
+                    foreach (var component in warehouseConditions)
                     {
                         if (component.Count <= count)
                         {
@@ -137,14 +137,12 @@ namespace TravelCompanyDatabaseImplement.Implements
                             context.WarehouseConditions.Remove(component);
                             context.SaveChanges();
                         }
-
                         else
                         {
                             component.Count -= count;
                             context.SaveChanges();
                             count = 0;
                         }
-
                         if (count == 0)
                         {
                             break;
@@ -152,7 +150,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                     }
                     if (count != 0)
                     {
-                        throw new Exception("Недостаточно компонентов");
+                        throw new Exception("Недостаточно условий для передания заказа в работу");
                     }
                 }
                 transaction.Commit();
