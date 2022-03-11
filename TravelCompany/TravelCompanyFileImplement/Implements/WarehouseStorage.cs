@@ -4,28 +4,29 @@ using System.Linq;
 using TravelCompanyContracts.BindingModels;
 using TravelCompanyContracts.StorageContracts;
 using TravelCompanyContracts.ViewModels;
-using TravelCompanyListImplement.Models;
+using TravelCompanyFileImplement.Models;
 
-namespace TravelCompanyListImplement.Implements
+namespace TravelCompanyFileImplement.Implements
 {
     public class WarehouseStorage : IWarehouseStorage
     {
-        private readonly DataListSingleton source;
+        private readonly FileDataListSingleton source;
         public WarehouseStorage()
         {
-            source = DataListSingleton.GetInstance();
+            source = FileDataListSingleton.GetInstance();
         }
         public void Delete(WarehouseBindingModel model)
         {
-            for (int i = 0; i < source.Warehouses.Count; ++i)
+            Warehouse element = source.Warehouses
+                .FirstOrDefault(rec => rec.Id == model.Id);
+            if(element != null)
             {
-                if (source.Warehouses[i].Id == model.Id)
-                {
-                    source.Warehouses.RemoveAt(i);
-                    return;
-                }
+                source.Warehouses.Remove(element);
             }
-            throw new Exception("Элемент не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
         }
 
         public WarehouseViewModel GetElement(WarehouseBindingModel model)
@@ -34,15 +35,9 @@ namespace TravelCompanyListImplement.Implements
             {
                 return null;
             }
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.Id == model.Id ||
-                    warehouse.WarehouseName == model.WarehouseName)
-                {
-                    return CreateModel(warehouse);
-                }
-            }
-            return null;
+            var warehouse = source.Warehouses
+                .FirstOrDefault(rec => rec.Id == model.Id || rec.WarehouseName == model.WarehouseName);
+            return warehouse != null ? CreateModel(warehouse) : null;
         }
 
         public List<WarehouseViewModel> GetFilteredList(WarehouseBindingModel model)
@@ -51,60 +46,79 @@ namespace TravelCompanyListImplement.Implements
             {
                 return null;
             }
-            var result = new List<WarehouseViewModel>();
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.WarehouseName.Contains(model.WarehouseName))
-                {
-                    result.Add(CreateModel(warehouse));
-                }
-            }
-            return result;
+            return source.Warehouses
+                .Where(rec => rec.WarehouseName.Contains(model.WarehouseName))
+                .Select(CreateModel)
+                .ToList();
         }
 
         public List<WarehouseViewModel> GetFullList()
         {
-            var result = new List<WarehouseViewModel>();
-            foreach (var condition in source.Warehouses)
-            {
-                result.Add(CreateModel(condition));
-            }
-            return result;
+            return source.Warehouses
+                .Select(CreateModel)
+                .ToList();
         }
 
         public void Insert(WarehouseBindingModel model)
         {
-            var tempWarehouse = new Warehouse { Id = 1, WarehouseConditions = new Dictionary<int, int>() };
-            foreach (var warehouse in source.Warehouses)
+            int maxId = source.Warehouses.Count > 0 ? source.Conditions.Max(rec => rec.Id) : 0;
+            var element = new Warehouse
             {
-                if (warehouse.Id >= tempWarehouse.Id)
-                {
-                    tempWarehouse.Id = warehouse.Id + 1;
-                }
-            }
-            source.Warehouses.Add(CreateModel(model, tempWarehouse));
+                Id = maxId + 1,
+                WarehouseConditions = new Dictionary<int, int>()
+            };
+            source.Warehouses.Add(CreateModel(model, element));
         }
 
         public bool TakeConditionFromWarehouse(Dictionary<int, (string, int)> conditions, int orderCount)
         {
-            throw new NotImplementedException();
+            foreach(var condition in conditions)
+            {
+                int count = source.Warehouses
+                    .Where(rec => rec.WarehouseConditions.ContainsKey(condition.Key)).Sum(rec => rec.WarehouseConditions[condition.Key]);
+                if (count < condition.Value.Item2 * orderCount)
+                {
+                    return false;
+                }
+            }
+            foreach (var condition in conditions)
+            {
+                int reqCount = condition.Value.Item2 * orderCount;
+                foreach (var warehouse in source.Warehouses)
+                {
+                    var warehouseCond = warehouse.WarehouseConditions;
+                    if (!warehouseCond.ContainsKey(condition.Key))
+                    {
+                        continue;
+                    }
+                    if(warehouseCond[condition.Key] > reqCount)
+                    {
+                        warehouseCond[condition.Key] -= reqCount;
+                        break;
+                    }
+                    else if(warehouseCond[condition.Key] <= reqCount)
+                    {
+                        reqCount -= warehouseCond[condition.Key];
+                        warehouseCond.Remove(condition.Key);
+                    }
+                    if(reqCount == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+            return true;
         }
 
         public void Update(WarehouseBindingModel model)
         {
-            Warehouse tempWarehouse = null;
-            foreach (var warehouse in source.Warehouses)
-            {
-                if (warehouse.Id == model.Id)
-                {
-                    tempWarehouse = warehouse;
-                }
-            }
-            if (tempWarehouse == null)
+            var element = source.Warehouses
+               .FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            CreateModel(model, tempWarehouse);
+            CreateModel(model, element);
         }
         private WarehouseViewModel CreateModel(Warehouse warehouse)
         {
@@ -128,7 +142,7 @@ namespace TravelCompanyListImplement.Implements
                 WarehouseName = warehouse.WarehouseName,
                 ResponsibleFullName = warehouse.ResponsibleFullName,
                 CreateDate = warehouse.CreateDate,
-                WarehouseConditions = warehouseConditions
+                WarehouseConditions = warehouse.WarehouseConditions.ToDictionary(recPC => recPC.Key, recPC => (source.Conditions.FirstOrDefault(recC => recC.Id == recPC.Key)?.ConditionName, recPC.Value))
             };
         }
         private Warehouse CreateModel(WarehouseBindingModel model,
