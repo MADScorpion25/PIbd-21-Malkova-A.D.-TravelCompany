@@ -8,11 +8,13 @@ namespace TravelCompanyListImplement.Models
         public List<Condition> Conditions { get; set; }
         public List<Order> Orders { get; set; }
         public List<Travel> Travels { get; set; }
+        public List<Warehouse> Warehouses { get; set; }
         private DataListSingleton()
         {
             Conditions = new List<Condition>();
             Orders = new List<Order>();
             Travels = new List<Travel>();
+            Warehouses = new List<Warehouse>();
         }
         public static DataListSingleton GetInstance()
         {

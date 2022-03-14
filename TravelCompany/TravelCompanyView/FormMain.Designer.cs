@@ -39,6 +39,8 @@ namespace TravelCompanyView
             this.toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.travelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.warehousesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addWarehouse = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -107,7 +109,8 @@ namespace TravelCompanyView
             // 
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem});
+            this.toolStripMenuItem,
+            this.addWarehouse});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1252, 28);
@@ -118,7 +121,8 @@ namespace TravelCompanyView
             // 
             this.toolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.conditionToolStripMenuItem,
-            this.travelToolStripMenuItem});
+            this.travelToolStripMenuItem,
+            this.warehousesToolStripMenuItem});
             this.toolStripMenuItem.Name = "toolStripMenuItem";
             this.toolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItem.Text = "Справочники";
@@ -134,6 +138,18 @@ namespace TravelCompanyView
             this.travelToolStripMenuItem.Name = "travelToolStripMenuItem";
             this.travelToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
             this.travelToolStripMenuItem.Text = "Туристические путевки";
+            // 
+            // warehousesToolStripMenuItem
+            // 
+            this.warehousesToolStripMenuItem.Name = "warehousesToolStripMenuItem";
+            this.warehousesToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.warehousesToolStripMenuItem.Text = "Склады";
+            // 
+            // addWarehouse
+            // 
+            this.addWarehouse.Name = "addWarehouse";
+            this.addWarehouse.Size = new System.Drawing.Size(143, 24);
+            this.addWarehouse.Text = "Пополнить склад";
             // 
             // FormMain
             // 
@@ -170,6 +186,8 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem conditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem travelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem warehousesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addWarehouse;
     }
 }
 
