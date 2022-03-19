@@ -19,7 +19,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 {
                     Id = rec.Id,
                     TravelId = rec.TravelId,
-                    TravelName = context.Travels.FirstOrDefault(tc => tc.Id == rec.TravelId).TravelName,
+                    TravelName = rec.Travel.TravelName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -41,7 +41,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 {
                     Id = rec.Id,
                     TravelId = rec.TravelId,
-                    TravelName = context.Travels.FirstOrDefault(tc => tc.Id == rec.TravelId).TravelName,
+                    TravelName = rec.Travel.TravelName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -64,7 +64,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             {
                 Id = order.Id,
                 TravelId = order.TravelId,
-                TravelName = context.Travels.FirstOrDefault(rec => rec.Id == order.TravelId)?.TravelName,
+                TravelName = order.Travel.TravelName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
