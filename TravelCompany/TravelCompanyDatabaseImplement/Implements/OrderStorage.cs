@@ -36,7 +36,9 @@ namespace TravelCompanyDatabaseImplement.Implements
             }
             TravelCompanyDatabase context = new TravelCompanyDatabase();
             return context.Orders.Include(rec => rec.Travel)
-                .Where(rec => rec.TravelId == model.TravelId)
+                .Where(rec => rec.TravelId == model.TravelId || ((!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
+                && rec.DateCreate.Date <= model.DateTo.Value.Date)))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,

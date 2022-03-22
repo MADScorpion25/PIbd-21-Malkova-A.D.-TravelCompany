@@ -26,7 +26,6 @@ namespace TravelCompanyView
             Controls.Add(panel);
         }
 
-
         private void buttonForming_Click(object sender, EventArgs e)
         {
             if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
@@ -55,8 +54,7 @@ dateTimePickerTo.Value.ToShortDateString()) };
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
