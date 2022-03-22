@@ -30,10 +30,10 @@ namespace TravelCompanyView
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.Condition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Travel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonSaveToExcel = new System.Windows.Forms.Button();
+            this.Travel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Condition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,8 +41,8 @@ namespace TravelCompanyView
             // 
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Condition,
             this.Travel,
+            this.Condition,
             this.Count});
             this.dataGridView.Location = new System.Drawing.Point(4, 65);
             this.dataGridView.Name = "dataGridView";
@@ -50,27 +50,6 @@ namespace TravelCompanyView
             this.dataGridView.RowTemplate.Height = 29;
             this.dataGridView.Size = new System.Drawing.Size(1041, 526);
             this.dataGridView.TabIndex = 0;
-            // 
-            // Condition
-            // 
-            this.Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Condition.HeaderText = "Условие";
-            this.Condition.MinimumWidth = 6;
-            this.Condition.Name = "Condition";
-            // 
-            // Travel
-            // 
-            this.Travel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Travel.HeaderText = "Путевка";
-            this.Travel.MinimumWidth = 6;
-            this.Travel.Name = "Travel";
-            // 
-            // Count
-            // 
-            this.Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Count.HeaderText = "Количество";
-            this.Count.MinimumWidth = 6;
-            this.Count.Name = "Count";
             // 
             // buttonSaveToExcel
             // 
@@ -81,6 +60,27 @@ namespace TravelCompanyView
             this.buttonSaveToExcel.Text = "Сохранить в Excel";
             this.buttonSaveToExcel.UseVisualStyleBackColor = true;
             this.buttonSaveToExcel.Click += new System.EventHandler(this.buttonSaveToExcel_Click);
+            // 
+            // Travel
+            // 
+            this.Travel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Travel.HeaderText = "Путевка";
+            this.Travel.MinimumWidth = 6;
+            this.Travel.Name = "Travel";
+            // 
+            // Condition
+            // 
+            this.Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Condition.HeaderText = "Условие";
+            this.Condition.MinimumWidth = 6;
+            this.Condition.Name = "Condition";
+            // 
+            // Count
+            // 
+            this.Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Count.HeaderText = "Количество";
+            this.Count.MinimumWidth = 6;
+            this.Count.Name = "Count";
             // 
             // FormReportTravelConditions
             // 
@@ -100,9 +100,9 @@ namespace TravelCompanyView
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Condition;
         private System.Windows.Forms.DataGridViewTextBoxColumn Travel;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.Button buttonSaveToExcel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Condition;
     }
 }
