@@ -54,22 +54,21 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             var conditions = _conditionStorage.GetFullList();
             var travels = _travelStorage.GetFullList();
             var list = new List<ReportTravelConditionViewModel>();
-            foreach (var condition in conditions)
+            foreach (var travel in travels)
             {
                 var record = new ReportTravelConditionViewModel
                 {
-                    ConditionName = condition.ConditionName,
-                    Travels = new List<Tuple<string, int>>(),
+                    TravelName = travel.TravelName,
+                    Conditions = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var travel in travels)
+                foreach (var condition in conditions)
                 {
                     if (travel.TravelConditions.ContainsKey(condition.Id))
                     {
-                        record.Travels.Add(new Tuple<string, int>(travel.TravelName,
+                        record.Conditions.Add(new Tuple<string, int>(condition.ConditionName,
                        travel.TravelConditions[condition.Id].Item2));
-                        record.TotalCount +=
-                       travel.TravelConditions[condition.Id].Item2;
+                        record.TotalCount += travel.TravelConditions[condition.Id].Item2;
                     }
                 }
                 list.Add(record);
@@ -82,8 +81,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             _saveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список условий",
-                Conditions = _conditionStorage.GetFullList()
+                Title = "Список путевок",
+                Travels = _travelStorage.GetFullList()
             });
         }
 
@@ -104,7 +103,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             _saveToExcel.CreateReport(new ExcelInfo
             {
                 FileName = model.FileName,
-                Title = "Список условий",
+                Title = "Список условий путевок",
                 TravelConditions = GetTravelCondition()
             });
         }

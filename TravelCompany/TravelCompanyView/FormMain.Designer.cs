@@ -40,9 +40,9 @@ namespace TravelCompanyView
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.travelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRep = new System.Windows.Forms.ToolStripMenuItem();
+            this.travToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.travelConditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.condToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -143,12 +143,18 @@ namespace TravelCompanyView
             // toolStripMenuItemRep
             // 
             this.toolStripMenuItemRep.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.condToolStripMenuItem,
+            this.travToolStripMenuItem,
             this.travelConditionToolStripMenuItem,
             this.ordersToolStripMenuItem});
             this.toolStripMenuItemRep.Name = "toolStripMenuItemRep";
             this.toolStripMenuItemRep.Size = new System.Drawing.Size(73, 24);
             this.toolStripMenuItemRep.Text = "Отчеты";
+            // 
+            // travToolStripMenuItem
+            // 
+            this.travToolStripMenuItem.Name = "travToolStripMenuItem";
+            this.travToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.travToolStripMenuItem.Text = "Список путевок";
             // 
             // travelConditionToolStripMenuItem
             // 
@@ -161,12 +167,6 @@ namespace TravelCompanyView
             this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
             this.ordersToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
             this.ordersToolStripMenuItem.Text = "Список заказов";
-            // 
-            // condToolStripMenuItem
-            // 
-            this.condToolStripMenuItem.Name = "condToolStripMenuItem";
-            this.condToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
-            this.condToolStripMenuItem.Text = "Список условий";
             // 
             // FormMain
             // 
@@ -212,7 +212,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem OrdersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem travelConditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem condToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem travToolStripMenuItem;
     }
 }
 

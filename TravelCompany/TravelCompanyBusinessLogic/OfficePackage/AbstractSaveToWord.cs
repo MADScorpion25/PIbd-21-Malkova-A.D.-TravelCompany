@@ -23,11 +23,12 @@ WordTextProperties { Bold = true, Size = "24", }) },
                     JustificationType = WordJustificationType.Center
                 }
             });
-            foreach (var component in info.Conditions)
+            foreach (var travel in info.Travels)
             {
                 CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> {(component.ConditionName, new WordTextProperties { Size = "24", }) },
+                    Texts = new List<(string, WordTextProperties)> {(travel.TravelName+"    ", new WordTextProperties { Size = "24", Bold = true }), 
+                        (travel.Price.ToString() , new WordTextProperties{ Size = "24", })},
                     TextProperties = new WordTextProperties
                     {
                         Size = "24",

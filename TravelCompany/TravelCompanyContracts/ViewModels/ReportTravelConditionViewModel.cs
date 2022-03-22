@@ -5,8 +5,8 @@ namespace TravelCompanyContracts.ViewModels
 {
     public class ReportTravelConditionViewModel
     {
-        public string ConditionName { get; set; }
+        public string TravelName { get; set; }
         public int TotalCount { get; set; }
-        public List<Tuple<string, int>> Travels { get; set; }
+        public List<Tuple<string, int>> Conditions { get; set; }
     }
 }

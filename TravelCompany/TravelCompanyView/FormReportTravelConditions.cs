@@ -48,8 +48,8 @@ namespace TravelCompanyView
                     dataGridView.Rows.Clear();
                     foreach (var elem in dict)
                     {
-                        dataGridView.Rows.Add(new object[] { elem.ConditionName, "", "" });
-                        foreach (var listElem in elem.Travels)
+                        dataGridView.Rows.Add(new object[] { elem.TravelName, "", "" });
+                        foreach (var listElem in elem.Conditions)
                         {
                             dataGridView.Rows.Add(new object[] { "", listElem.Item1, listElem.Item2 });
                         }

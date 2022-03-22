@@ -99,7 +99,7 @@ namespace TravelCompanyView
             this.panel.Controls.Add(this.buttonToRdf);
             this.panel.Controls.Add(this.dateTimePickerTo);
             this.panel.Controls.Add(this.label2);
-            this.panel.Location = new System.Drawing.Point(1, 2);
+            this.panel.Location = new System.Drawing.Point(2, 1);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(1154, 56);
             this.panel.TabIndex = 6;

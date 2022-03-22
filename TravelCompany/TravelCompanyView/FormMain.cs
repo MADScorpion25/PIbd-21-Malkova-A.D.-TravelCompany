@@ -21,11 +21,11 @@ namespace TravelCompanyView
                 if (mainItem.Text.Equals("Справочники"))
                 {
                     mainItem.DropDownItems[0].Click += conditionToolStripMenuItem_Click;
-                    mainItem.DropDownItems[1].Click += travelsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[1].Click += travelToolStripMenuItem_Click;
                 }
                 else
                 {
-                    mainItem.DropDownItems[0].Click += conditionsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[0].Click += travelsToolStripMenuItem_Click;
                     mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += ordersToolStripMenuItem_Click;
                 }
@@ -59,12 +59,12 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormConditions>();
             form.ShowDialog();
         }
-        private void travelsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void travelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormTravels>();
             form.ShowDialog();
         }
-        private void conditionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void travelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
