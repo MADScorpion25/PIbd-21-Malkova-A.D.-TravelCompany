@@ -1,6 +1,8 @@
 using System;
 using System.Windows.Forms;
 using TravelCompanyBusinessLogic.BusinessLogics;
+using TravelCompanyBusinessLogic.OfficePackage;
+using TravelCompanyBusinessLogic.OfficePackage.Implements;
 using TravelCompanyContracts.BusinessLogicsContracts;
 using TravelCompanyContracts.StorageContracts;
 using TravelCompanyDatabaseImplement.Implements;
@@ -54,6 +56,10 @@ namespace TravelCompanyView
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<IWarehouseLogic, WarehouseLogic>(new
                HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportLogic, ReportLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToExcel, SaveToExcel>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToWord, SaveToWord>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToPdf, SaveToPdf>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

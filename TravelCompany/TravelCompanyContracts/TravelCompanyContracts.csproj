@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Mercato.AspNet.OData.DataTableExtension" Version="1.2.10" />
+  </ItemGroup>
+
 </Project>
