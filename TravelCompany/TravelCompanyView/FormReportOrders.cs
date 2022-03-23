@@ -20,7 +20,7 @@ namespace TravelCompanyView
                 Dock = DockStyle.Bottom
             };
             reportViewer.LocalReport.LoadReportDefinition(new
-           FileStream("C://Users//admal//source//repos//PIbd-21-Malkova-A.D.-TravelCompany//TravelCompany//TravelCompanyView//Report.rdlc", FileMode.Open));
+           FileStream("C://Users//admal//source//repos//PIbd-21-Malkova-A.D.-TravelCompany//TravelCompany//TravelCompanyView//ReportOrders.rdlc", FileMode.Open));
             Controls.Clear();
             Controls.Add(panel);
             Controls.Add(reportViewer);
