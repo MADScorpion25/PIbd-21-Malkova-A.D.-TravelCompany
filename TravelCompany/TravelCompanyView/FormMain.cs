@@ -25,9 +25,9 @@ namespace TravelCompanyView
                 }
                 else
                 {
-                    mainItem.DropDownItems[0].Click += travelsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[0].Click += travelsListToolStripMenuItem_Click;
                     mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
-                    mainItem.DropDownItems[2].Click += ordersToolStripMenuItem_Click;
+                    mainItem.DropDownItems[2].Click += ordersListToolStripMenuItem_Click;
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormTravels>();
             form.ShowDialog();
         }
-        private void travelsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void travelsListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -82,7 +82,7 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormReportTravelConditions>();
             form.ShowDialog();
         }
-        private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ordersListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormReportOrders>();
             form.ShowDialog();

@@ -40,9 +40,9 @@ namespace TravelCompanyView
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.travelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRep = new System.Windows.Forms.ToolStripMenuItem();
-            this.travToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.travelConditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TravelListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TravelConditionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OrderListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -143,30 +143,30 @@ namespace TravelCompanyView
             // toolStripMenuItemRep
             // 
             this.toolStripMenuItemRep.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.travToolStripMenuItem,
-            this.travelConditionToolStripMenuItem,
-            this.ordersToolStripMenuItem});
+            this.TravelListToolStripMenuItem,
+            this.TravelConditionsToolStripMenuItem,
+            this.OrderListToolStripMenuItem});
             this.toolStripMenuItemRep.Name = "toolStripMenuItemRep";
             this.toolStripMenuItemRep.Size = new System.Drawing.Size(73, 24);
             this.toolStripMenuItemRep.Text = "Отчеты";
             // 
-            // travToolStripMenuItem
+            // TravelListToolStripMenuItem
             // 
-            this.travToolStripMenuItem.Name = "travToolStripMenuItem";
-            this.travToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
-            this.travToolStripMenuItem.Text = "Список путевок";
+            this.TravelListToolStripMenuItem.Name = "TravelListToolStripMenuItem";
+            this.TravelListToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.TravelListToolStripMenuItem.Text = "Список путевок";
             // 
-            // travelConditionToolStripMenuItem
+            // TravelConditionsToolStripMenuItem
             // 
-            this.travelConditionToolStripMenuItem.Name = "travelConditionToolStripMenuItem";
-            this.travelConditionToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
-            this.travelConditionToolStripMenuItem.Text = "Условия по путевкам";
+            this.TravelConditionsToolStripMenuItem.Name = "TravelConditionsToolStripMenuItem";
+            this.TravelConditionsToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.TravelConditionsToolStripMenuItem.Text = "Условия по путевкам";
             // 
-            // ordersToolStripMenuItem
+            // OrderListToolStripMenuItem
             // 
-            this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
-            this.ordersToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
-            this.ordersToolStripMenuItem.Text = "Список заказов";
+            this.OrderListToolStripMenuItem.Name = "OrderListToolStripMenuItem";
+            this.OrderListToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.OrderListToolStripMenuItem.Text = "Список заказов";
             // 
             // FormMain
             // 
@@ -208,11 +208,12 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemTravelCond;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOrders;
         private System.Windows.Forms.ToolStripMenuItem conditionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem TravelConditionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TravelConditionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OrdersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem travelConditionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TravelConditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem travToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TravelListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OrderListToolStripMenuItem;
     }
 }
 
