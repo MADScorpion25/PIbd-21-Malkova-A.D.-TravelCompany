@@ -20,7 +20,7 @@ namespace TravelCompanyContracts.BusinessLogicsContracts
         /// Сохранение компонент в файл-Word
         /// </summary>
         /// <param name="model"></param>
-        void SaveConditionsToWordFile(ReportBindingModel model);
+        void SaveTravelsToWordFile(ReportBindingModel model);
         /// <summary>
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>

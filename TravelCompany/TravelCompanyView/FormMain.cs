@@ -69,7 +69,7 @@ namespace TravelCompanyView
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _reportLogic.SaveConditionsToWordFile(new ReportBindingModel
+                _reportLogic.SaveTravelsToWordFile(new ReportBindingModel
                 {
                     FileName = dialog.FileName
                 });

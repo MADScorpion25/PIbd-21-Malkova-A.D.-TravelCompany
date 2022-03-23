@@ -12,19 +12,16 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
 {
     public class ReportLogic : IReportLogic
     {
-        private readonly IConditionStorage _conditionStorage;
         private readonly ITravelStorage _travelStorage;
         private readonly IOrderStorage _orderStorage;
         private readonly AbstractSaveToExcel _saveToExcel;
         private readonly AbstractSaveToWord _saveToWord;
         private readonly AbstractSaveToPdf _saveToPdf;
-        public ReportLogic(ITravelStorage travelStorage, IConditionStorage
-       conditionStorage, IOrderStorage orderStorage,
+        public ReportLogic(ITravelStorage travelStorage, IOrderStorage orderStorage,
         AbstractSaveToExcel saveToExcel, AbstractSaveToWord saveToWord,
        AbstractSaveToPdf saveToPdf)
         {
             _travelStorage = travelStorage;
-            _conditionStorage = conditionStorage;
             _orderStorage = orderStorage;
             _saveToExcel = saveToExcel;
             _saveToWord = saveToWord;
@@ -51,7 +48,6 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
 
         public List<ReportTravelConditionViewModel> GetTravelCondition()
         {
-            var conditions = _conditionStorage.GetFullList();
             var travels = _travelStorage.GetFullList();
             var list = new List<ReportTravelConditionViewModel>();
             foreach (var travel in travels)
@@ -62,21 +58,18 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                     Conditions = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (var condition in conditions)
+                foreach (var condition in travel.TravelConditions)
                 {
-                    if (travel.TravelConditions.ContainsKey(condition.Id))
-                    {
-                        record.Conditions.Add(new Tuple<string, int>(condition.ConditionName,
-                       travel.TravelConditions[condition.Id].Item2));
-                        record.TotalCount += travel.TravelConditions[condition.Id].Item2;
-                    }
+                    record.Conditions.Add(new Tuple<string, int>(condition.Value.Item1,
+                       travel.TravelConditions[condition.Key].Item2));
+                    record.TotalCount += travel.TravelConditions[condition.Key].Item2;
                 }
                 list.Add(record);
             }
             return list;
         }
 
-        public void SaveConditionsToWordFile(ReportBindingModel model)
+        public void SaveTravelsToWordFile(ReportBindingModel model)
         {
             _saveToWord.CreateDoc(new WordInfo
             {
