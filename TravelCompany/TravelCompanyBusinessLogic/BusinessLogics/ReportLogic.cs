@@ -143,5 +143,28 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Warehouses = _warehouseStorage.GetFullList()
             });
         }
+
+        public List<ReportTotalOrdersViewModel> GetTotalOrders()
+        {
+            return _orderStorage.GetFullList()
+                .GroupBy(order => order.DateCreate.ToLongDateString())
+                .Select(rec => new ReportTotalOrdersViewModel
+                {
+                    DateCreate = Convert.ToDateTime(rec.Key),
+                    TotalCount = rec.Count(),
+                    TotalSum = rec.Sum(order => order.Sum)
+                })
+                .ToList();
+        }
+
+        public void SaveTotalOrdersToPdfFile(ReportBindingModel model)
+        {
+            _saveToPdf.CreateDocTotalOrders(new PdfInfoTotalOrders
+            {
+                FileName = model.FileName,
+                Title = "Список заказов за весь период",
+                TotalOrders = GetTotalOrders()
+            });
+        }
     }
 }

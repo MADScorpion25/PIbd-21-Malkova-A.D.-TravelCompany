@@ -35,6 +35,7 @@ namespace TravelCompanyView
                     mainItem.DropDownItems[2].Click += ordersListToolStripMenuItem_Click;
                     mainItem.DropDownItems[3].Click += warehousesListToolStripMenuItem_Click;
                     mainItem.DropDownItems[4].Click += warehouseConditionsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[5].Click += ordersTotalToolStripMenuItem_Click;
                 }
             }
         }
@@ -83,16 +84,16 @@ namespace TravelCompanyView
         }
         private void travelListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
-            //if (dialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    _reportLogic.SaveConditionsToWordFile(new ReportBindingModel
-            //    {
-            //        FileName = dialog.FileName
-            //    });
-            //    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-            //    MessageBoxIcon.Information);
-            //}
+            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _reportLogic.SaveTravelsToWordFile(new ReportBindingModel
+                {
+                    FileName = dialog.FileName
+                });
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
         }
         private void conditionTravelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -120,6 +121,11 @@ namespace TravelCompanyView
         private void warehouseConditionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormReportWarehouseConditions>();
+            form.ShowDialog();
+        }
+        private void ordersTotalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportTotalOrders>();
             form.ShowDialog();
         }
 

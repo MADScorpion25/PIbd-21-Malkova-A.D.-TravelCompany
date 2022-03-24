@@ -23,6 +23,12 @@ namespace TravelCompanyContracts.BusinessLogicsContracts
         /// <returns></returns>
         List<ReportWarehouseConditionViewModel> GetWarehouseConditions();
         /// <summary>
+        /// Получение списка заказов за определенный период
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        List<ReportTotalOrdersViewModel> GetTotalOrders();
+        /// <summary>
         /// Сохранение компонент в файл-Word
         /// </summary>
         /// <param name="model"></param>
@@ -47,5 +53,10 @@ namespace TravelCompanyContracts.BusinessLogicsContracts
         /// </summary>
         /// <param name="model"></param>
         void SaveOrdersToPdfFile(ReportBindingModel model);
+        /// <summary>
+        /// Сохранение заказов за весь период в файл-Pdf
+        /// </summary>
+        /// <param name="model"></param>
+        void SaveTotalOrdersToPdfFile(ReportBindingModel model);
     }
 }

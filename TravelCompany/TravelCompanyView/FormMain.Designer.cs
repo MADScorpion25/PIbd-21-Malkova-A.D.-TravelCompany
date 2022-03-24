@@ -47,6 +47,7 @@ namespace TravelCompanyView
             this.OrderListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WarehouseListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WarehouseConditionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.OrdersTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -165,7 +166,8 @@ namespace TravelCompanyView
             this.ConditionTravelToolStripMenuItem,
             this.OrderListToolStripMenuItem,
             this.WarehouseListToolStripMenuItem,
-            this.WarehouseConditionToolStripMenuItem1});
+            this.WarehouseConditionToolStripMenuItem1,
+            this.OrdersTotalToolStripMenuItem});
             this.toolStripMenuItemRep.Name = "toolStripMenuItemRep";
             this.toolStripMenuItemRep.Size = new System.Drawing.Size(73, 24);
             this.toolStripMenuItemRep.Text = "Отчеты";
@@ -173,32 +175,38 @@ namespace TravelCompanyView
             // TravelListToolStripMenuItem
             // 
             this.TravelListToolStripMenuItem.Name = "TravelListToolStripMenuItem";
-            this.TravelListToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.TravelListToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.TravelListToolStripMenuItem.Text = "Список путевок";
             // 
             // ConditionTravelToolStripMenuItem
             // 
             this.ConditionTravelToolStripMenuItem.Name = "ConditionTravelToolStripMenuItem";
-            this.ConditionTravelToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.ConditionTravelToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.ConditionTravelToolStripMenuItem.Text = "Условия по путевкам";
             // 
             // OrderListToolStripMenuItem
             // 
             this.OrderListToolStripMenuItem.Name = "OrderListToolStripMenuItem";
-            this.OrderListToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.OrderListToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.OrderListToolStripMenuItem.Text = "Список заказов";
             // 
             // WarehouseListToolStripMenuItem
             // 
             this.WarehouseListToolStripMenuItem.Name = "WarehouseListToolStripMenuItem";
-            this.WarehouseListToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
+            this.WarehouseListToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.WarehouseListToolStripMenuItem.Text = "Список складов";
             // 
             // WarehouseConditionToolStripMenuItem1
             // 
             this.WarehouseConditionToolStripMenuItem1.Name = "WarehouseConditionToolStripMenuItem1";
-            this.WarehouseConditionToolStripMenuItem1.Size = new System.Drawing.Size(240, 26);
+            this.WarehouseConditionToolStripMenuItem1.Size = new System.Drawing.Size(265, 26);
             this.WarehouseConditionToolStripMenuItem1.Text = "Условия по складам";
+            // 
+            // OrdersTotalToolStripMenuItem
+            // 
+            this.OrdersTotalToolStripMenuItem.Name = "OrdersTotalToolStripMenuItem";
+            this.OrdersTotalToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
+            this.OrdersTotalToolStripMenuItem.Text = "Общий отчет по заказам";
             // 
             // FormMain
             // 
@@ -244,6 +252,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem OrderListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem WarehouseListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem WarehouseConditionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem OrdersTotalToolStripMenuItem;
     }
 }
 
