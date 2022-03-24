@@ -28,6 +28,11 @@ namespace TravelCompanyContracts.BusinessLogicsContracts
         /// <param name="model"></param>
         void SaveTravelsToWordFile(ReportBindingModel model);
         /// <summary>
+        /// Сохранение складов в файл-Word
+        /// </summary>
+        /// <param name="model"></param>
+        void SaveWarehousesToWordFile(ReportBindingModel model);
+        /// <summary>
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>

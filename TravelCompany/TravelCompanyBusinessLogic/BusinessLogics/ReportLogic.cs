@@ -133,5 +133,15 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 WarehouseConditions = GetWarehouseConditions()
             });
         }
+
+        public void SaveWarehousesToWordFile(ReportBindingModel model)
+        {
+            _saveToWord.CreateWarehouseDoc(new WordInfoWarehouses
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                Warehouses = _warehouseStorage.GetFullList()
+            });
+        }
     }
 }

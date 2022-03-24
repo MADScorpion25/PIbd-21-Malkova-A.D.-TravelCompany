@@ -114,5 +114,10 @@ namespace TravelCompanyBusinessLogic.OfficePackage.Implements
             _wordDocument.MainDocumentPart.Document.Save();
             _wordDocument.Close();
         }
+
+        protected override void CreateTable(Table table)
+        {
+            _docBody.AppendChild(table);
+        }
     }
 }
