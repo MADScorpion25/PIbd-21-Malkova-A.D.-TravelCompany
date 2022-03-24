@@ -60,9 +60,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 };
                 foreach (var condition in travel.TravelConditions)
                 {
-                    record.Conditions.Add(new Tuple<string, int>(condition.Value.Item1,
-                       travel.TravelConditions[condition.Key].Item2));
-                    record.TotalCount += travel.TravelConditions[condition.Key].Item2;
+                    record.Conditions.Add(new Tuple<string, int>(condition.Value.Item1, condition.Value.Item2));
+                    record.TotalCount += condition.Value.Item2;
                 }
                 list.Add(record);
             }
