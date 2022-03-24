@@ -63,7 +63,7 @@ namespace TravelCompanyBusinessLogic.OfficePackage
             }
             SaveExcel(info);
         }
-        public void CreateReportWarehouseCondition(ExcelInfoWarehouses info)
+        public void CreateWarehouseReport(ExcelInfoWarehouses info)
         {
             CreateExcel(info);
             InsertCellInWorksheet(new ExcelCellParameters
@@ -79,17 +79,17 @@ namespace TravelCompanyBusinessLogic.OfficePackage
                 CellToName = "C1"
             });
             uint rowIndex = 2;
-            foreach (var pc in info.WarehouseConditions)
+            foreach (var wc in info.WarehouseConditions)
             {
                 InsertCellInWorksheet(new ExcelCellParameters
                 {
                     ColumnName = "A",
                     RowIndex = rowIndex,
-                    Text = pc.WarehouseName,
+                    Text = wc.WarehouseName,
                     StyleInfo = ExcelStyleInfoType.Text
                 });
                 rowIndex++;
-                foreach (var condition in pc.Conditions)
+                foreach (var condition in wc.Conditions)
                 {
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
@@ -111,7 +111,7 @@ namespace TravelCompanyBusinessLogic.OfficePackage
                 {
                     ColumnName = "C",
                     RowIndex = rowIndex,
-                    Text = pc.TotalCount.ToString(),
+                    Text = wc.TotalCount.ToString(),
                     StyleInfo = ExcelStyleInfoType.Text
                 });
                 rowIndex++;
@@ -124,7 +124,6 @@ namespace TravelCompanyBusinessLogic.OfficePackage
         /// <param name="info"></param>
         /// <param name="info"></param>
         protected abstract void CreateExcel(ExcelInfo info);
-        protected abstract void CreateExcel(ExcelInfoWarehouses info);
         /// <summary>
         /// Добавляем новую ячейку в лист
         /// </summary>
@@ -140,6 +139,5 @@ namespace TravelCompanyBusinessLogic.OfficePackage
         /// </summary>
         /// <param name="info"></param>
         protected abstract void SaveExcel(ExcelInfo info);
-        protected abstract void SaveExcel(ExcelInfoWarehouses info);
     }
 }

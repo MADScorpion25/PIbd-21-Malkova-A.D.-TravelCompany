@@ -33,6 +33,8 @@ namespace TravelCompanyView
                     mainItem.DropDownItems[0].Click += travelListToolStripMenuItem_Click;
                     mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += ordersListToolStripMenuItem_Click;
+                    mainItem.DropDownItems[3].Click += warehousesListToolStripMenuItem_Click;
+                    mainItem.DropDownItems[4].Click += warehouseConditionsToolStripMenuItem_Click;
                 }
             }
         }
@@ -81,16 +83,16 @@ namespace TravelCompanyView
         }
         private void travelListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                _reportLogic.SaveConditionsToWordFile(new ReportBindingModel
-                {
-                    FileName = dialog.FileName
-                });
-                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-            }
+            //using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            //if (dialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    _reportLogic.SaveConditionsToWordFile(new ReportBindingModel
+            //    {
+            //        FileName = dialog.FileName
+            //    });
+            //    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+            //    MessageBoxIcon.Information);
+            //}
         }
         private void conditionTravelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -100,6 +102,24 @@ namespace TravelCompanyView
         private void ordersListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+        private void warehousesListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            //if (dialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
+            //    {
+            //        FileName = dialog.FileName
+            //    });
+            //    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+            //    MessageBoxIcon.Information);
+            //}
+        }
+        private void warehouseConditionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportWarehouseConditions>();
             form.ShowDialog();
         }
 

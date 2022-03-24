@@ -238,12 +238,6 @@ namespace TravelCompanyBusinessLogic.OfficePackage.Implements
             sheets.Append(sheet);
             _worksheet = worksheetPart.Worksheet;
         }
-
-        protected override void CreateExcel(ExcelInfoWarehouses info)
-        {
-            throw new System.NotImplementedException();
-        }
-
         protected override void InsertCellInWorksheet(ExcelCellParameters excelParams)
         {
             var sheetData = _worksheet.GetFirstChild<SheetData>();
@@ -329,11 +323,5 @@ namespace TravelCompanyBusinessLogic.OfficePackage.Implements
             _spreadsheetDocument.Close();
         }
 
-        protected override void SaveExcel(ExcelInfoWarehouses info)
-        {
-            _spreadsheetDocument.WorkbookPart.Workbook.Save();
-            _spreadsheetDocument.Close();
-        }
     }
 }
-

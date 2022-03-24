@@ -27,7 +27,7 @@ WordTextProperties { Bold = true, Size = "24", }) },
             {
                 CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> {(travel.TravelName+"    ", new WordTextProperties { Size = "24", Bold = true }), 
+                    Texts = new List<(string, WordTextProperties)> {(travel.TravelName+"    ", new WordTextProperties { Size = "24", Bold = true }),
                         (travel.Price.ToString() , new WordTextProperties{ Size = "24", })},
                     TextProperties = new WordTextProperties
                     {
