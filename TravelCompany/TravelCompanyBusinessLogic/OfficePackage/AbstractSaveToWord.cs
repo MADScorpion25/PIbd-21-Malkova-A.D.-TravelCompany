@@ -42,9 +42,19 @@ WordTextProperties { Bold = true, Size = "24", }) },
         }
         public void CreateWarehouseDoc(WordInfoWarehouses info)
         {
-            Table table = new Table();
             CreateWord(info);
+            Table table = new Table();
             CreateTable(table);
+            CreateParagraph(new WordParagraph
+            {
+                Texts = new List<(string, WordTextProperties)> { (info.Title, new
+                        WordTextProperties {Bold = true, Size = "24", } ) },
+                TextProperties = new WordTextProperties
+                {
+                    Size = "24",
+                    JustificationType = WordJustificationType.Center
+                }
+            });
             TableRow tableRowHeader = new TableRow();
 
             TableCell cellHeaderName = new TableCell();
@@ -93,16 +103,6 @@ WordTextProperties { Bold = true, Size = "24", }) },
 
                 table.Append(tableRow);
             }
-            CreateParagraph(new WordParagraph
-            {
-                Texts = new List<(string, WordTextProperties)> { (info.Title, new
-                        WordTextProperties {Bold = true, Size = "24", } ) },
-                TextProperties = new WordTextProperties
-                {
-                    Size = "24",
-                    JustificationType = WordJustificationType.Center
-                }
-            });
             SaveWord(info);
         }
         /// <summary>
