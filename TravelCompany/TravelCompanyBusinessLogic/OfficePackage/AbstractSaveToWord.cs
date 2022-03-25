@@ -42,55 +42,9 @@ WordTextProperties { Bold = true, Size = "24", }) },
         }
         public void CreateWarehouseDoc(WordInfoWarehouses info)
         {
-            CreateWord(info);
             Table table = new Table();
-            TableProperties tblProp = new TableProperties(
-                new TableBorders(
-                    new TopBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new BottomBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new LeftBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new RightBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new InsideHorizontalBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 8
-                    },
-                    new InsideVerticalBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 8
-                    }
-                )
-            );
-            table.AppendChild(tblProp);
-
-            CreateParagraph(new WordParagraph
-            {
-                Texts = new List<(string, WordTextProperties)> { (info.Title, new
-                        WordTextProperties {Bold = true, Size = "24", } ) },
-                TextProperties = new WordTextProperties
-                {
-                    Size = "24",
-                    JustificationType = WordJustificationType.Center
-                }
-            });
-
+            CreateWord(info);
+            CreateTable(table);
             TableRow tableRowHeader = new TableRow();
 
             TableCell cellHeaderName = new TableCell();
@@ -139,8 +93,16 @@ WordTextProperties { Bold = true, Size = "24", }) },
 
                 table.Append(tableRow);
             }
-
-            CreateTable(table);
+            CreateParagraph(new WordParagraph
+            {
+                Texts = new List<(string, WordTextProperties)> { (info.Title, new
+                        WordTextProperties {Bold = true, Size = "24", } ) },
+                TextProperties = new WordTextProperties
+                {
+                    Size = "24",
+                    JustificationType = WordJustificationType.Center
+                }
+            });
             SaveWord(info);
         }
         /// <summary>

@@ -132,7 +132,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DateCreate.Value</Value>
+                              <Value>=Fields!DateCreate.Value.ToShortDateString()</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -238,7 +238,7 @@
         <Top>4.09787cm</Top>
         <Left>1.45203cm</Left>
         <Height>3.50188cm</Height>
-        <Width>17.39542cm</Width>
+        <Width>17.39541cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -311,7 +311,7 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-      <Field Name="DateCreate">
+        <Field Name="DateCreate">
           <DataField>DateCreate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>

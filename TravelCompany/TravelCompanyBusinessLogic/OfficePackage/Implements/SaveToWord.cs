@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using System.Collections.Generic;
 using TravelCompanyBusinessLogic.OfficePackage.HelperModels;
 
 namespace TravelCompanyBusinessLogic.OfficePackage.Implements
@@ -117,6 +118,41 @@ namespace TravelCompanyBusinessLogic.OfficePackage.Implements
 
         protected override void CreateTable(Table table)
         {
+            TableProperties tblProp = new TableProperties(
+                new TableBorders(
+                    new TopBorder
+                    {
+                        Val = new EnumValue<BorderValues>(BorderValues.Single),
+                        Size = 10
+                    },
+                    new BottomBorder
+                    {
+                        Val = new EnumValue<BorderValues>(BorderValues.Single),
+                        Size = 10
+                    },
+                    new LeftBorder
+                    {
+                        Val = new EnumValue<BorderValues>(BorderValues.Single),
+                        Size = 10
+                    },
+                    new RightBorder
+                    {
+                        Val = new EnumValue<BorderValues>(BorderValues.Single),
+                        Size = 10
+                    },
+                    new InsideHorizontalBorder
+                    {
+                        Val = new EnumValue<BorderValues>(BorderValues.Single),
+                        Size = 8
+                    },
+                    new InsideVerticalBorder
+                    {
+                        Val = new EnumValue<BorderValues>(BorderValues.Single),
+                        Size = 8
+                    }
+                )
+            );
+            table.AppendChild(tblProp);
             _docBody.AppendChild(table);
         }
     }

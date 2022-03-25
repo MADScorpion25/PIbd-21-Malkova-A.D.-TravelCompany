@@ -22,13 +22,14 @@ namespace TravelCompanyView
             _logic = logic;
             reportViewer = new ReportViewer
             {
-                Dock = DockStyle.Bottom
+                Dock = DockStyle.Fill
             };
             reportViewer.LocalReport.LoadReportDefinition(new
            FileStream("C://Users//admal//source//repos//PIbd-21-Malkova-A.D.-TravelCompany//TravelCompany//TravelCompanyView//ReportTotalOrders.rdlc", FileMode.Open));
             Controls.Clear();
-            Controls.Add(panel);
             Controls.Add(reportViewer);
+            panel.Dock = DockStyle.Top;
+            Controls.Add(panel);
         }
 
         private void buttonForming_Click(object sender, EventArgs e)
