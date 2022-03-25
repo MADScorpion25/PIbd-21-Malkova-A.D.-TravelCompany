@@ -15,17 +15,7 @@ namespace TravelCompanyDatabaseImplement.Implements
         {
             TravelCompanyDatabase context = new TravelCompanyDatabase();
             return context.Orders.Include(rec => rec.Travel)
-                .Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    TravelId = rec.TravelId,
-                    TravelName = rec.Travel.TravelName,
-                    Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                })
+                .Select(CreateModel)
                 .ToList();
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
@@ -37,17 +27,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             TravelCompanyDatabase context = new TravelCompanyDatabase();
             return context.Orders.Include(rec => rec.Travel)
                 .Where(rec => rec.TravelId == model.TravelId)
-                .Select(rec => new OrderViewModel
-                {
-                    Id = rec.Id,
-                    TravelId = rec.TravelId,
-                    TravelName = rec.Travel.TravelName,
-                    Count = rec.Count,
-                    Sum = rec.Sum,
-                    Status = rec.Status,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                })
+                .Select(CreateModel)
                 .ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -57,21 +37,10 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             TravelCompanyDatabase context = new TravelCompanyDatabase();
-           Order order = context.Orders.Include(rec => rec.Travel)
+           Order order = context.Orders
+                .Include(rec => rec.Travel)
                 .FirstOrDefault(rec => rec.Id == model.Id);
-            return order != null ?
-            new OrderViewModel
-            {
-                Id = order.Id,
-                TravelId = order.TravelId,
-                TravelName = order.Travel.TravelName,
-                Count = order.Count,
-                Sum = order.Sum,
-                Status = order.Status,
-                DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
-            } :
-            null;
+            return order != null ? CreateModel(order) : null;
         }
         public void Insert(OrderBindingModel model)
         {
@@ -145,6 +114,20 @@ namespace TravelCompanyDatabaseImplement.Implements
                 throw new Exception("Элемент не найден");
             }
             return order;
+        }
+        private OrderViewModel CreateModel(Order order)
+        {
+            return new OrderViewModel
+            {
+                Id = order.Id,
+                TravelId = order.TravelId,
+                TravelName = order.Travel.TravelName,
+                Count = order.Count,
+                Sum = order.Sum,
+                Status = order.Status,
+                DateCreate = order.DateCreate,
+                DateImplement = order.DateImplement,
+            };
         }
     }
 }

@@ -15,11 +15,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             using (var context = new TravelCompanyDatabase())
             {
                 return context.Conditions
-                .Select(rec => new ConditionViewModel
-                {
-                    Id = rec.Id,
-                    ConditionName = rec.ConditionName
-                })
+                .Select(CreateModel)
                 .ToList();
             }
         }
@@ -34,11 +30,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             {
                 return context.Conditions
                 .Where(rec => rec.ConditionName.Contains(model.ConditionName))
-               .Select(rec => new ConditionViewModel
-               {
-                   Id = rec.Id,
-                   ConditionName = rec.ConditionName
-               })
+                .Select(CreateModel)
                 .ToList();
             }
         }
@@ -52,15 +44,8 @@ namespace TravelCompanyDatabaseImplement.Implements
             using (var context = new TravelCompanyDatabase())
             {
                 var condition = context.Conditions
-                .FirstOrDefault(rec => rec.ConditionName == model.ConditionName ||
-               rec.Id == model.Id);
-                return condition != null ?
-                new ConditionViewModel
-                {
-                    Id = condition.Id,
-                    ConditionName = condition.ConditionName
-                } :
-               null;
+                .FirstOrDefault(rec => rec.ConditionName == model.ConditionName || rec.Id == model.Id);
+                return condition != null ? CreateModel(condition) : null;
             }
         }
 
@@ -77,8 +62,7 @@ namespace TravelCompanyDatabaseImplement.Implements
         {
             using (var context = new TravelCompanyDatabase())
             {
-                var element = context.Conditions.FirstOrDefault(rec => rec.Id ==
-               model.Id);
+                var element = context.Conditions.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
                     throw new Exception("Элемент не найден");
@@ -92,8 +76,7 @@ namespace TravelCompanyDatabaseImplement.Implements
         {
             using (var context = new TravelCompanyDatabase())
             {
-                Condition element = context.Conditions.FirstOrDefault(rec => rec.Id ==
-               model.Id);
+                Condition element = context.Conditions.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element != null)
                 {
                     context.Conditions.Remove(element);
@@ -109,6 +92,14 @@ namespace TravelCompanyDatabaseImplement.Implements
         {
             condition.ConditionName = model.ConditionName;
             return condition;
+        }
+        private ConditionViewModel CreateModel(Condition model)
+        {
+            return new ConditionViewModel
+            {
+                Id = model.Id,
+                ConditionName = model.ConditionName
+            };
         }
     }
 }
