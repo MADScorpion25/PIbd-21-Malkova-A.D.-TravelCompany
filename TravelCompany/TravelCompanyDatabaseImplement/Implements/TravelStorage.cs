@@ -14,16 +14,10 @@ namespace TravelCompanyDatabaseImplement.Implements
         public List<TravelViewModel> GetFullList()
         {
             var context = new TravelCompanyDatabase();
-            return context.Travels.Include(rec => rec.TravelConditions).ThenInclude(rec => rec.Condition).ToList().Select(rec => new TravelViewModel
-            {
-                Id = rec.Id,
-                TravelName = rec.TravelName,
-                Price = rec.Price,
-                TravelConditions = rec.TravelConditions
-                .ToDictionary(recTC => recTC.ConditionId, recPC =>
-               (recPC.Condition?.ConditionName, recPC.Count))
-            })
-               .ToList();
+            return context.Travels
+                .Include(rec => rec.TravelConditions)
+                .ThenInclude(rec => rec.Condition)
+                .ToList().Select(CreateModel).ToList();
         }
 
         public List<TravelViewModel> GetFilteredList(TravelBindingModel model)
@@ -33,17 +27,11 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             var context = new TravelCompanyDatabase();
-            return context.Travels.Include(rec => rec.TravelConditions).ThenInclude(rec => rec.Condition).
-                Where(rec => rec.TravelName.Contains(model.TravelName)).ToList().Select(rec => new TravelViewModel
-                {
-                    Id = rec.Id,
-                    TravelName = rec.TravelName,
-                    Price = rec.Price,
-                    TravelConditions = rec.TravelConditions
-                .ToDictionary(recTC => recTC.ConditionId, recPC =>
-               (recPC.Condition?.ConditionName, recPC.Count))
-                })
-               .ToList();
+            return context.Travels
+                .Include(rec => rec.TravelConditions)
+                .ThenInclude(rec => rec.Condition)
+                .Where(rec => rec.TravelName.Contains(model.TravelName))
+                .ToList().Select(CreateModel).ToList();
         }
 
         public TravelViewModel GetElement(TravelBindingModel model)
@@ -53,19 +41,11 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             var context = new TravelCompanyDatabase();
-             var travel = context.Travels.Include(rec => rec.TravelConditions).ThenInclude(rec => rec.Condition)
-                .FirstOrDefault(rec => rec.TravelName == model.TravelName || rec.Id == model.Id);
-            return travel != null ?
-            new TravelViewModel
-            {
-                Id = travel.Id,
-                TravelName = travel.TravelName,
-                Price = travel.Price,
-                TravelConditions = travel.TravelConditions
-            .ToDictionary(recPC => recPC.ConditionId, recTC =>
-           (recTC.Condition?.ConditionName, recTC.Count))
-            } :
-           null;
+            var travel = context.Travels
+               .Include(rec => rec.TravelConditions)
+               .ThenInclude(rec => rec.Condition)
+               .FirstOrDefault(rec => rec.TravelName == model.TravelName || rec.Id == model.Id);
+            return travel != null ? CreateModel(travel) : null;
         }
 
         public void Insert(TravelBindingModel model)
@@ -157,6 +137,17 @@ namespace TravelCompanyDatabaseImplement.Implements
                 context.SaveChanges();
             }
             return travel;
+        }
+        private TravelViewModel CreateModel(Travel travel)
+        {
+            return new TravelViewModel
+            {
+                Id = travel.Id,
+                TravelName = travel.TravelName,
+                Price = travel.Price,
+                TravelConditions = travel.TravelConditions
+                .ToDictionary(recPC => recPC.ConditionId, recTC => (recTC.Condition?.ConditionName, recTC.Count))
+            };
         }
     }
 }
