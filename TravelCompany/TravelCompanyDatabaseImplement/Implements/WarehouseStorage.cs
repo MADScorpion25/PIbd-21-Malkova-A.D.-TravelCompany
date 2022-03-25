@@ -32,24 +32,12 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             var context = new TravelCompanyDatabase();
-            var Warehouse = context.Warehouses
+            var warehouse = context.Warehouses
                     .Include(rec => rec.WarehouseConditions)
                     .ThenInclude(rec => rec.Condition)
                     .FirstOrDefault(rec => rec.WarehouseName == model.WarehouseName || rec.Id == model.Id);
 
-            return Warehouse != null ?
-                new WarehouseViewModel
-                {
-                    Id = Warehouse.Id,
-                    WarehouseName = Warehouse.WarehouseName,
-                    ResponsibleFullName = Warehouse.ResponsibleFullName,
-                    CreateDate = Warehouse.DateCreate,
-                    WarehouseConditions = Warehouse.WarehouseConditions
-                        .ToDictionary(recWarehouseCondition => recWarehouseCondition.ConditionId,
-                        recWarehouseCondition => (recWarehouseCondition.Condition?.ConditionName,
-                        recWarehouseCondition.Count))
-                } :
-                null;
+            return warehouse != null ? CreateModel(warehouse) : null;
         }
 
         public List<WarehouseViewModel> GetFilteredList(WarehouseBindingModel model)
@@ -64,17 +52,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 .ThenInclude(rec => rec.Condition)
                 .Where(rec => rec.WarehouseName.Contains(model.WarehouseName))
                 .ToList()
-                .Select(rec => new WarehouseViewModel
-                {
-                    Id = rec.Id,
-                    WarehouseName = rec.WarehouseName,
-                    ResponsibleFullName = rec.ResponsibleFullName,
-                    CreateDate = rec.DateCreate,
-                    WarehouseConditions = rec.WarehouseConditions
-                        .ToDictionary(recWarehouseCondition => recWarehouseCondition.ConditionId,
-                         recWarehouseCondition => (recWarehouseCondition.Condition?.ConditionName,
-                         recWarehouseCondition.Count))
-                })
+                .Select(CreateModel)
                 .ToList();
         }
 
@@ -85,17 +63,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 .Include(rec => rec.WarehouseConditions)
                 .ThenInclude(rec => rec.Condition)
                 .ToList()
-                .Select(rec => new WarehouseViewModel
-                 {
-                    Id = rec.Id,
-                    WarehouseName = rec.WarehouseName,
-                    ResponsibleFullName = rec.ResponsibleFullName,
-                    CreateDate = rec.DateCreate,
-                    WarehouseConditions = rec.WarehouseConditions
-                        .ToDictionary(recWarehouseConditions => recWarehouseConditions.ConditionId,
-                         recWarehouseConditions => (recWarehouseConditions.Condition?.ConditionName,
-                         recWarehouseConditions.Count))
-                    })
+                .Select(CreateModel)
                 .ToList();
         }
 
@@ -230,6 +198,20 @@ namespace TravelCompanyDatabaseImplement.Implements
             }
 
             return warehouse;
+        }
+        private WarehouseViewModel CreateModel(Warehouse warehouse)
+        {
+            return new WarehouseViewModel
+            {
+                Id = warehouse.Id,
+                WarehouseName = warehouse.WarehouseName,
+                ResponsibleFullName = warehouse.ResponsibleFullName,
+                CreateDate = warehouse.DateCreate,
+                WarehouseConditions = warehouse.WarehouseConditions
+                        .ToDictionary(recWarehouseConditions => recWarehouseConditions.ConditionId,
+                         recWarehouseConditions => (recWarehouseConditions.Condition?.ConditionName,
+                         recWarehouseConditions.Count))
+            };
         }
     }
 }
