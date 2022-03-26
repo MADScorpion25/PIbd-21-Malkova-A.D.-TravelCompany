@@ -20,6 +20,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             _orderStorage.Insert(new OrderBindingModel
             {
                 TravelId = model.TravelId,
+                ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,

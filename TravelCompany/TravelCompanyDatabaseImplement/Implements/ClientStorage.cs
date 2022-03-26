@@ -69,7 +69,7 @@ namespace TravelCompanyDatabaseImplement.Implements
         {
             using (var context = new TravelCompanyDatabase())
             {
-                context.Clients.Add(CreateModel(model, new Client(), context));
+                context.Clients.Add(CreateModel(model, new Client()));
                 context.SaveChanges();
             }
         }
@@ -84,11 +84,11 @@ namespace TravelCompanyDatabaseImplement.Implements
                 {
                     throw new Exception("Клиент не найден");
                 }
-                CreateModel(model, element, context);
+                CreateModel(model, element);
                 context.SaveChanges();
             }
         }
-        private Client CreateModel(ClientBindingModel model, Client client, TravelCompanyDatabase database)
+        private Client CreateModel(ClientBindingModel model, Client client)
         {
             client.ClientFIO = model.ClientFIO;
             client.Login = model.Login;

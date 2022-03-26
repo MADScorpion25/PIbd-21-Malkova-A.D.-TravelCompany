@@ -11,22 +11,32 @@ namespace TravelCompanyView
     {
         private readonly ITravelLogic _logicD;
         private readonly IOrderLogic _logicO;
-        public FormCreateOrder(ITravelLogic logicP, IOrderLogic logicO)
+        private readonly IClientLogic _logicC;
+        public FormCreateOrder(ITravelLogic logicP, IOrderLogic logicO, IClientLogic logicC)
         {
             InitializeComponent();
             _logicD = logicP;
             _logicO = logicO;
+            _logicC = logicC;
         }
 
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
-            List<TravelViewModel> list = _logicD.Read(null);
-            if (list != null)
+            List<TravelViewModel> listT = _logicD.Read(null);
+            if (listT != null)
             {
-                comboBoxTravel.DataSource = list;
+                comboBoxTravel.DataSource = listT;
                 comboBoxTravel.DisplayMember = "TravelName";
                 comboBoxTravel.ValueMember = "Id";
                 comboBoxTravel.SelectedItem = null;
+            }
+            List<ClientViewModel> listC = _logicC.Read(null);
+            if (listC != null)
+            {
+                comboBoxClient.DataSource = listC;
+                comboBoxClient.DisplayMember = "ClientFIO";
+                comboBoxClient.ValueMember = "Id";
+                comboBoxClient.SelectedItem = null;
             }
         }
         private void CalcSum()
@@ -73,11 +83,18 @@ namespace TravelCompanyView
                MessageBoxIcon.Error);
                 return;
             }
+            if (comboBoxClient.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+                return;
+            }
             try
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
                     TravelId = Convert.ToInt32(comboBoxTravel.SelectedValue),
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });

@@ -37,11 +37,13 @@ namespace TravelCompanyView
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxTravel = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxClient = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ButtonCancel
             // 
-            this.ButtonCancel.Location = new System.Drawing.Point(315, 191);
+            this.ButtonCancel.Location = new System.Drawing.Point(315, 250);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(113, 38);
             this.ButtonCancel.TabIndex = 20;
@@ -51,7 +53,7 @@ namespace TravelCompanyView
             // 
             // ButtonSave
             // 
-            this.ButtonSave.Location = new System.Drawing.Point(190, 191);
+            this.ButtonSave.Location = new System.Drawing.Point(190, 250);
             this.ButtonSave.Name = "ButtonSave";
             this.ButtonSave.Size = new System.Drawing.Size(113, 38);
             this.ButtonSave.TabIndex = 19;
@@ -61,7 +63,7 @@ namespace TravelCompanyView
             // 
             // textBoxSum
             // 
-            this.textBoxSum.Location = new System.Drawing.Point(149, 141);
+            this.textBoxSum.Location = new System.Drawing.Point(149, 200);
             this.textBoxSum.Name = "textBoxSum";
             this.textBoxSum.ReadOnly = true;
             this.textBoxSum.Size = new System.Drawing.Size(279, 27);
@@ -70,7 +72,7 @@ namespace TravelCompanyView
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 144);
+            this.label1.Location = new System.Drawing.Point(31, 203);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 20);
             this.label1.TabIndex = 17;
@@ -78,7 +80,7 @@ namespace TravelCompanyView
             // 
             // textBoxCount
             // 
-            this.textBoxCount.Location = new System.Drawing.Point(149, 83);
+            this.textBoxCount.Location = new System.Drawing.Point(149, 142);
             this.textBoxCount.Name = "textBoxCount";
             this.textBoxCount.Size = new System.Drawing.Size(279, 27);
             this.textBoxCount.TabIndex = 16;
@@ -87,7 +89,7 @@ namespace TravelCompanyView
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 83);
+            this.label3.Location = new System.Drawing.Point(31, 142);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 20);
             this.label3.TabIndex = 15;
@@ -96,7 +98,7 @@ namespace TravelCompanyView
             // comboBoxTravel
             // 
             this.comboBoxTravel.FormattingEnabled = true;
-            this.comboBoxTravel.Location = new System.Drawing.Point(149, 25);
+            this.comboBoxTravel.Location = new System.Drawing.Point(149, 84);
             this.comboBoxTravel.Name = "comboBoxTravel";
             this.comboBoxTravel.Size = new System.Drawing.Size(279, 28);
             this.comboBoxTravel.TabIndex = 14;
@@ -105,17 +107,36 @@ namespace TravelCompanyView
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 28);
+            this.label2.Location = new System.Drawing.Point(31, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 20);
             this.label2.TabIndex = 13;
             this.label2.Text = "Изделие:";
             // 
+            // comboBoxClient
+            // 
+            this.comboBoxClient.FormattingEnabled = true;
+            this.comboBoxClient.Location = new System.Drawing.Point(149, 29);
+            this.comboBoxClient.Name = "comboBoxClient";
+            this.comboBoxClient.Size = new System.Drawing.Size(279, 28);
+            this.comboBoxClient.TabIndex = 22;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(31, 32);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 20);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Клиент:";
+            // 
             // FormCreateOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 251);
+            this.ClientSize = new System.Drawing.Size(480, 330);
+            this.Controls.Add(this.comboBoxClient);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.textBoxSum);
@@ -142,5 +163,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBoxTravel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxClient;
+        private System.Windows.Forms.Label label4;
     }
 }
