@@ -8,6 +8,9 @@ namespace TravelCompanyContracts.ViewModels
     {
         public int Id { get; set; }
         public int TravelId { get; set; }
+        public int ClientId { get; set; }
+        [DisplayName("ФИО клиента")]
+        public string ClientFIO { get; set; }
         [DisplayName("Туристическая путевка")]
         public string TravelName { get; set; }
         [DisplayName("Количество")]

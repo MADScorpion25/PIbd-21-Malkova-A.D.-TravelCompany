@@ -75,6 +75,7 @@ namespace TravelCompanyFileImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.TravelId = model.TravelId;
+            order.ClientId = model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -87,13 +88,15 @@ namespace TravelCompanyFileImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.ClientFIO,
                 TravelId = order.TravelId,
-                TravelName = source.Travels.FirstOrDefault(travel => travel.Id == order.TravelId)?.TravelName,
+                TravelName = source.Travels.FirstOrDefault(x => x.Id == order.TravelId)?.TravelName,
                 Count = order.Count,
                 Sum = order.Sum,
-                Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
+                Status = order.Status,
+                DateImplement = order.DateImplement
             };
         }
     }

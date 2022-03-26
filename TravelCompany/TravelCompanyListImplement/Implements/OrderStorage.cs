@@ -99,6 +99,7 @@ namespace TravelCompanyListImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.TravelId = model.TravelId;
+            order.ClientId = model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -117,11 +118,21 @@ namespace TravelCompanyListImplement.Implements
                     break;
                 }
             }
+
+            string clientFIO = null;
+            foreach (var client in source.Clients)
+            {
+                if (client.Id == order.TravelId)
+                {
+                    clientFIO = client.ClientFIO;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
                 TravelId = order.TravelId,
                 TravelName = travelName,
+                ClientFIO = clientFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
