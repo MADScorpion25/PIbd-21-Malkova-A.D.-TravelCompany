@@ -40,8 +40,8 @@ namespace TravelCompanyClientApp.Controllers
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password)
             && !string.IsNullOrEmpty(fio))
             {
-                APIClient.PostRequest("api/client/updatedata", new
-                ClientBindingModel
+                APIClient.PostRequest("api/client/updatedata", 
+                new ClientBindingModel
                 {
                     Id = Program.Client.Id,
                     ClientFIO = fio,
@@ -98,8 +98,8 @@ namespace TravelCompanyClientApp.Controllers
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password)
             && !string.IsNullOrEmpty(fio))
             {
-                APIClient.PostRequest("api/client/register", new
-                ClientBindingModel
+                APIClient.PostRequest("api/client/register",
+                new ClientBindingModel
                 {
                     ClientFIO = fio,
                     Login = login,
@@ -124,7 +124,13 @@ namespace TravelCompanyClientApp.Controllers
             {
                 return;
             }
-            //прописать запрос
+            APIClient.PostRequest("api/main/createorder", new CreateOrderBindingModel
+            {
+                ClientId = Program.Client.Id,
+                TravelId = travel,
+                Count = count,
+                Sum = sum
+            });
             Response.Redirect("Index");
         }
         [HttpPost]
