@@ -19,8 +19,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
         private readonly AbstractSaveToWord _saveToWord;
         private readonly AbstractSaveToPdf _saveToPdf;
         public ReportLogic(ITravelStorage travelStorage, IOrderStorage orderStorage, IWarehouseStorage warehouseStorage,
-        AbstractSaveToExcel saveToExcel, AbstractSaveToWord saveToWord,
-       AbstractSaveToPdf saveToPdf)
+        AbstractSaveToExcel saveToExcel, AbstractSaveToWord saveToWord, AbstractSaveToPdf saveToPdf)
         {
             _travelStorage = travelStorage;
             _orderStorage = orderStorage;
