@@ -132,7 +132,10 @@ namespace TravelCompanyWarehouseApp.Controllers
             WarehouseViewModel warehouse = APIClient.GetRequest<WarehouseViewModel>($"api/Warehouse/GetWarehouse?warehouseId={warehouseId}");
             ViewBag.WarehouseName = warehouse.WarehouseName;
             ViewBag.ResponsibleFullName = warehouse.ResponsibleFullName;
-            ViewBag.WarehouseConditions = warehouse.WarehouseConditions;
+            warehouse.WarehouseConditions.Clear();
+            warehouse.WarehouseConditions.Add(10, ("Условие1", 5));
+            warehouse.WarehouseConditions.Add(11, ("Условие2", 2));
+            ViewBag.ConditionsWarehouse = warehouse.WarehouseConditions;
             return View();
         }
         [HttpPost]

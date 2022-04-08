@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Editing";
 }
 <div class="text-center">
     <h2 class="display-4">Создание склада</h2>
@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th>
-                    Компонент
+                    Условие
                 </th>
                 <th>
                     Количество
@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewBag.WarehouseConditions)
+            @foreach (var item in ViewBag.ConditionsWarehouse)
             {
                 <tr>
                     <td>
