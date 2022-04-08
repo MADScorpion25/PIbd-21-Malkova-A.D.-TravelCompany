@@ -41,10 +41,10 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             var context = new TravelCompanyDatabase();
-             var travel = context.Travels
-                .Include(rec => rec.TravelConditions)
-                .ThenInclude(rec => rec.Condition)
-                .FirstOrDefault(rec => rec.TravelName == model.TravelName || rec.Id == model.Id);
+            var travel = context.Travels
+               .Include(rec => rec.TravelConditions)
+               .ThenInclude(rec => rec.Condition)
+               .FirstOrDefault(rec => rec.TravelName == model.TravelName || rec.Id == model.Id);
             return travel != null ? CreateModel(travel) : null;
         }
 

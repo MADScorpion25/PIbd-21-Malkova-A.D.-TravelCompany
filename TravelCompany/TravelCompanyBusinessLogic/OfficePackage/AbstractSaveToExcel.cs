@@ -1,0 +1,88 @@
+﻿using TravelCompanyBusinessLogic.OfficePackage.HelperModels;
+
+namespace TravelCompanyBusinessLogic.OfficePackage
+{
+    public abstract class AbstractSaveToExcel
+    {
+        /// <summary>
+        /// Создание отчета
+        /// </summary>
+        /// <param name="info"></param>
+        public void CreateReport(ExcelInfo info)
+        {
+            CreateExcel(info);
+            InsertCellInWorksheet(new ExcelCellParameters
+            {
+                ColumnName = "A",
+                RowIndex = 1,
+                Text = info.Title,
+                StyleInfo = ExcelStyleInfoType.Title
+            });
+            MergeCells(new ExcelMergeParameters
+            {
+                CellFromName = "A1",
+                CellToName = "C1"
+            });
+            uint rowIndex = 2;
+            foreach (var pc in info.TravelConditions)
+            {
+                InsertCellInWorksheet(new ExcelCellParameters
+                {
+                    ColumnName = "A",
+                    RowIndex = rowIndex,
+                    Text = pc.TravelName,
+                    StyleInfo = ExcelStyleInfoType.Text
+                });
+                rowIndex++;
+                foreach (var condition in pc.Conditions)
+                {
+                    InsertCellInWorksheet(new ExcelCellParameters
+                    {
+                        ColumnName = "B",
+                        RowIndex = rowIndex,
+                        Text = condition.Item1,
+                        StyleInfo = ExcelStyleInfoType.TextWithBroder
+                    });
+                    InsertCellInWorksheet(new ExcelCellParameters
+                    {
+                        ColumnName = "C",
+                        RowIndex = rowIndex,
+                        Text = condition.Item2.ToString(),
+                        StyleInfo = ExcelStyleInfoType.TextWithBroder
+                    });
+                    rowIndex++;
+                }
+                InsertCellInWorksheet(new ExcelCellParameters
+                {
+                    ColumnName = "C",
+                    RowIndex = rowIndex,
+                    Text = pc.TotalCount.ToString(),
+                    StyleInfo = ExcelStyleInfoType.Text
+                });
+                rowIndex++;
+            }
+            SaveExcel(info);
+        }
+        /// <summary>
+        /// Создание excel-файла
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="info"></param>
+        protected abstract void CreateExcel(ExcelInfo info);
+        /// <summary>
+        /// Добавляем новую ячейку в лист
+        /// </summary>
+        /// <param name="cellParameters"></param>
+        protected abstract void InsertCellInWorksheet(ExcelCellParameters excelParams);
+        /// <summary>
+        /// Объединение ячеек
+        /// </summary>
+        /// <param name="mergeParameters"></param>
+        protected abstract void MergeCells(ExcelMergeParameters excelParams);
+        /// <summary>
+        /// Сохранение файла
+        /// </summary>
+        /// <param name="info"></param>
+        protected abstract void SaveExcel(ExcelInfo info);
+    }
+}
