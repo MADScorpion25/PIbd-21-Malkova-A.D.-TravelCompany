@@ -10,6 +10,7 @@ namespace TravelCompanyBusinessLogic.OfficePackage.Implements
     {
         private WordprocessingDocument _wordDocument;
         private Body _docBody;
+        private Table _table;
         /// <summary>
         /// Получение типа выравнивания
         /// </summary>
@@ -116,44 +117,64 @@ namespace TravelCompanyBusinessLogic.OfficePackage.Implements
             _wordDocument.Close();
         }
 
-        protected override void CreateTable(Table table)
+        protected override void CreateTable(List<string> tableHeaderInfo)
         {
-            TableProperties tblProp = new TableProperties(
+            _table = new Table();
+            TableProperties tblProps = new TableProperties(
                 new TableBorders(
-                    new TopBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new BottomBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new LeftBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new RightBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 10
-                    },
-                    new InsideHorizontalBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 8
-                    },
-                    new InsideVerticalBorder
-                    {
-                        Val = new EnumValue<BorderValues>(BorderValues.Single),
-                        Size = 8
-                    }
-                )
-            );
-            table.AppendChild(tblProp);
-            _docBody.AppendChild(table);
+                new TopBorder
+                {
+                    Val = new EnumValue<BorderValues>(BorderValues.Single),
+                    Size = 12
+                },
+                new BottomBorder
+                {
+                    Val = new EnumValue<BorderValues>(BorderValues.Single),
+                    Size = 12
+                },
+                new LeftBorder
+                {
+                    Val = new EnumValue<BorderValues>(BorderValues.Single),
+                    Size = 12
+                },
+                new RightBorder
+                {
+                    Val = new EnumValue<BorderValues>(BorderValues.Single),
+                    Size = 12
+                },
+                new InsideHorizontalBorder
+                {
+                    Val = new EnumValue<BorderValues>(BorderValues.Single),
+                    Size = 12
+                },
+                new InsideVerticalBorder
+                {
+                    Val = new EnumValue<BorderValues>(BorderValues.Single),
+                    Size = 12
+                }));
+
+            _table.AppendChild<TableProperties>(tblProps);
+            _docBody.AppendChild(_table);
+            TableRow tableRowHeader = new TableRow();
+            foreach (string stringHeaderCell in tableHeaderInfo)
+            {
+                TableCell cellHeader = new TableCell();
+                cellHeader.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                cellHeader.Append(new Paragraph(new Run(new Text(stringHeaderCell))));
+                tableRowHeader.Append(cellHeader);
+            }
+            _table.Append(tableRowHeader);
+        }
+        protected override void AddRowTable(List<string> tableRowInfo)
+        {
+            TableRow tableRow = new TableRow();
+            foreach (string cell in tableRowInfo)
+            {
+                TableCell tableCell = new TableCell();
+                tableCell.Append(new Paragraph(new Run(new Text(cell))));
+                tableRow.Append(tableCell);
+            }
+            _table.Append(tableRow);
         }
     }
 }
