@@ -10,21 +10,32 @@ namespace TravelCompanyView
     public partial class FormMain : Form
     {
         private readonly OrderLogic _orderLogic;
-        public FormMain(OrderLogic orderLogic)
+        private readonly ReportLogic _reportLogic;
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic)
         {
             InitializeComponent();
             _orderLogic = orderLogic;
+            _reportLogic = reportLogic;
             foreach (ToolStripMenuItem mainItem in menuStrip.Items)
             {
                 if (mainItem.Text.Equals("Справочники"))
                 {
-                    mainItem.DropDownItems[0].Click += conditionsToolStripMenuItem_Click;
-                    mainItem.DropDownItems[1].Click += travelsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[0].Click += conditionToolStripMenuItem_Click;
+                    mainItem.DropDownItems[1].Click += travelToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += warehousesToolStripMenuItem_Click;
+                }
+                else if(mainItem.Text.Equals("Пополнить склад"))
+                {
+                    mainItem.Click += warehouseAddToolStripMenuItem_Click;;
                 }
                 else
                 {
-                    mainItem.Click += warehouseAddToolStripMenuItem_Click;
+                    mainItem.DropDownItems[0].Click += travelListToolStripMenuItem_Click;
+                    mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[2].Click += ordersListToolStripMenuItem_Click;
+                    mainItem.DropDownItems[3].Click += warehousesListToolStripMenuItem_Click;
+                    mainItem.DropDownItems[4].Click += warehouseConditionsToolStripMenuItem_Click;
+                    mainItem.DropDownItems[5].Click += ordersTotalToolStripMenuItem_Click;
                 }
             }
         }
@@ -51,12 +62,12 @@ namespace TravelCompanyView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void conditionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void conditionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormConditions>();
             form.ShowDialog();
         }
-        private void travelsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void travelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormTravels>();
             form.ShowDialog();
@@ -71,6 +82,53 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormWarehouseCondition>();
             form.ShowDialog();
         }
+        private void travelListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _reportLogic.SaveTravelsToWordFile(new ReportBindingModel
+                {
+                    FileName = dialog.FileName
+                });
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+        }
+        private void conditionTravelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportTravelConditions>();
+            form.ShowDialog();
+        }
+        private void ordersListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportOrders>();
+            form.ShowDialog();
+        }
+        private void warehousesListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
+                {
+                    FileName = dialog.FileName
+                });
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            }
+        }
+        private void warehouseConditionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportWarehouseConditions>();
+            form.ShowDialog();
+        }
+        private void ordersTotalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportTotalOrders>();
+            form.ShowDialog();
+        }
+
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();
