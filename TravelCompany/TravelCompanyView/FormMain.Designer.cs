@@ -31,8 +31,6 @@ namespace TravelCompanyView
         {
             this.ButtonUpdateList = new System.Windows.Forms.Button();
             this.ButtonOrderDelivered = new System.Windows.Forms.Button();
-            this.ButtonOrderReady = new System.Windows.Forms.Button();
-            this.ButtonTakeInWork = new System.Windows.Forms.Button();
             this.ButtonCreateOrder = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -41,22 +39,26 @@ namespace TravelCompanyView
             this.travelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.warehousesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addWarehouse = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRep = new System.Windows.Forms.ToolStripMenuItem();
             this.TravelListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConditionTravelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OrderListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.WarehouseListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WarehouseConditionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.OrdersTotalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TravelConditionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStartWork = new System.Windows.Forms.ToolStripMenuItem();
+            this.implementerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // ButtonUpdateList
             // 
-            this.ButtonUpdateList.Location = new System.Drawing.Point(957, 477);
+            this.ButtonUpdateList.Location = new System.Drawing.Point(957, 407);
             this.ButtonUpdateList.Name = "ButtonUpdateList";
             this.ButtonUpdateList.Size = new System.Drawing.Size(283, 43);
             this.ButtonUpdateList.TabIndex = 15;
@@ -66,7 +68,7 @@ namespace TravelCompanyView
             // 
             // ButtonOrderDelivered
             // 
-            this.ButtonOrderDelivered.Location = new System.Drawing.Point(957, 396);
+            this.ButtonOrderDelivered.Location = new System.Drawing.Point(957, 326);
             this.ButtonOrderDelivered.Name = "ButtonOrderDelivered";
             this.ButtonOrderDelivered.Size = new System.Drawing.Size(283, 43);
             this.ButtonOrderDelivered.TabIndex = 14;
@@ -74,29 +76,9 @@ namespace TravelCompanyView
             this.ButtonOrderDelivered.UseVisualStyleBackColor = true;
             this.ButtonOrderDelivered.Click += new System.EventHandler(this.ButtonOrderDelivered_Click);
             // 
-            // ButtonOrderReady
-            // 
-            this.ButtonOrderReady.Location = new System.Drawing.Point(957, 311);
-            this.ButtonOrderReady.Name = "ButtonOrderReady";
-            this.ButtonOrderReady.Size = new System.Drawing.Size(283, 43);
-            this.ButtonOrderReady.TabIndex = 13;
-            this.ButtonOrderReady.Text = "Заказ готов";
-            this.ButtonOrderReady.UseVisualStyleBackColor = true;
-            this.ButtonOrderReady.Click += new System.EventHandler(this.ButtonOrderReady_Click);
-            // 
-            // ButtonTakeInWork
-            // 
-            this.ButtonTakeInWork.Location = new System.Drawing.Point(957, 228);
-            this.ButtonTakeInWork.Name = "ButtonTakeInWork";
-            this.ButtonTakeInWork.Size = new System.Drawing.Size(283, 43);
-            this.ButtonTakeInWork.TabIndex = 12;
-            this.ButtonTakeInWork.Text = "Отдать на выполнение";
-            this.ButtonTakeInWork.UseVisualStyleBackColor = true;
-            this.ButtonTakeInWork.Click += new System.EventHandler(this.ButtonTakeInWork_Click);
-            // 
             // ButtonCreateOrder
             // 
-            this.ButtonCreateOrder.Location = new System.Drawing.Point(957, 143);
+            this.ButtonCreateOrder.Location = new System.Drawing.Point(957, 245);
             this.ButtonCreateOrder.Name = "ButtonCreateOrder";
             this.ButtonCreateOrder.Size = new System.Drawing.Size(283, 43);
             this.ButtonCreateOrder.TabIndex = 11;
@@ -120,7 +102,8 @@ namespace TravelCompanyView
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem,
             this.addWarehouse,
-            this.toolStripMenuItemRep});
+            this.toolStripMenuItemRep,
+            this.toolStripMenuItemStartWork});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1252, 28);
@@ -133,7 +116,8 @@ namespace TravelCompanyView
             this.conditionToolStripMenuItem,
             this.travelToolStripMenuItem,
             this.warehousesToolStripMenuItem,
-            this.clientToolStripMenuItem});
+            this.clientToolStripMenuItem,
+            this.implementerToolStripMenuItem});
             this.toolStripMenuItem.Name = "toolStripMenuItem";
             this.toolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItem.Text = "Справочники";
@@ -161,6 +145,11 @@ namespace TravelCompanyView
             this.addWarehouse.Name = "addWarehouse";
             this.addWarehouse.Size = new System.Drawing.Size(143, 24);
             this.addWarehouse.Text = "Пополнить склад";
+            // clientToolStripMenuItem
+            // 
+            this.clientToolStripMenuItem.Name = "clientToolStripMenuItem";
+            this.clientToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.clientToolStripMenuItem.Text = "Клиенты";
             // 
             // toolStripMenuItemRep
             // 
@@ -222,12 +211,18 @@ namespace TravelCompanyView
             this.OrdersTotalToolStripMenuItem.Name = "OrdersTotalToolStripMenuItem";
             this.OrdersTotalToolStripMenuItem.Size = new System.Drawing.Size(265, 26);
             this.OrdersTotalToolStripMenuItem.Text = "Общий отчет по заказам";
+            //
+            // toolStripMenuItemStartWork
             // 
-            // clientToolStripMenuItem
+            this.toolStripMenuItemStartWork.Name = "toolStripMenuItemStartWork";
+            this.toolStripMenuItemStartWork.Size = new System.Drawing.Size(125, 24);
+            this.toolStripMenuItemStartWork.Text = "Запуск работы";
             // 
-            this.clientToolStripMenuItem.Name = "clientToolStripMenuItem";
-            this.clientToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
-            this.clientToolStripMenuItem.Text = "Клиенты";
+            // implementerToolStripMenuItem
+            // 
+            this.implementerToolStripMenuItem.Name = "implementerToolStripMenuItem";
+            this.implementerToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.implementerToolStripMenuItem.Text = "Исполнители";
             // 
             // FormMain
             // 
@@ -236,8 +231,6 @@ namespace TravelCompanyView
             this.ClientSize = new System.Drawing.Size(1252, 655);
             this.Controls.Add(this.ButtonUpdateList);
             this.Controls.Add(this.ButtonOrderDelivered);
-            this.Controls.Add(this.ButtonOrderReady);
-            this.Controls.Add(this.ButtonTakeInWork);
             this.Controls.Add(this.ButtonCreateOrder);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.menuStrip);
@@ -257,8 +250,6 @@ namespace TravelCompanyView
 
         private System.Windows.Forms.Button ButtonUpdateList;
         private System.Windows.Forms.Button ButtonOrderDelivered;
-        private System.Windows.Forms.Button ButtonOrderReady;
-        private System.Windows.Forms.Button ButtonTakeInWork;
         private System.Windows.Forms.Button ButtonCreateOrder;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.MenuStrip menuStrip;
@@ -284,7 +275,8 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem TravelConditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ordersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientToolStripMenuItem;
-
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWork;
+        private System.Windows.Forms.ToolStripMenuItem implementerToolStripMenuItem;
     }
 }
 

@@ -17,18 +17,21 @@ namespace TravelCompanyDatabaseImplement.Implements
             return context.Orders
                 .Include(rec => rec.Travel)
                 .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     TravelId = rec.TravelId,
                     TravelName = rec.Travel.TravelName,
                     ClientId = rec.ClientId,
+                    ImplementerId = rec.ImplementerId,
                     ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).ClientFIO,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty
                 })
                 .ToList();
         }
@@ -42,9 +45,11 @@ namespace TravelCompanyDatabaseImplement.Implements
             return context.Orders
                 .Include(rec => rec.Travel)
                 .Include(rec => rec.Client)
+                .Include(rec => rec.Implementer)
                 .Where(rec => rec.TravelId == model.TravelId || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
-                && rec.DateCreate.Date <= model.DateTo.Value.Date) || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                && rec.DateCreate.Date <= model.DateTo.Value.Date) || (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status) || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
@@ -57,6 +62,8 @@ namespace TravelCompanyDatabaseImplement.Implements
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
+                    ImplementerId = rec.ImplementerId,
+                    ImplementerFIO = rec.ImplementerId.HasValue ? rec.Implementer.ImplementerFIO : string.Empty
                 })
                 .ToList();
         }
@@ -70,6 +77,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             Order order = context.Orders
                  .Include(rec => rec.Travel)
                  .Include(rec => rec.Client)
+                 .Include(rec => rec.Implementer)
                  .FirstOrDefault(rec => rec.Id == model.Id);
             return order != null ? new OrderViewModel
             {
@@ -83,6 +91,8 @@ namespace TravelCompanyDatabaseImplement.Implements
                 Status = order.Status,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = order.ImplementerId.HasValue ? order.Implementer.ImplementerFIO : string.Empty
             } : null;
         }
         public void Insert(OrderBindingModel model)
@@ -97,7 +107,8 @@ namespace TravelCompanyDatabaseImplement.Implements
                 Status = model.Status,
                 DateCreate = model.DateCreate,
                 DateImplement = model.DateImplement,
-            };
+                ImplementerId = model.ImplementerId
+        };
             context.Orders.Add(order);
             context.SaveChanges();
             CreateModel(model, order);
@@ -118,6 +129,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             element.Status = model.Status;
             element.DateCreate = model.DateCreate;
             element.DateImplement = model.DateImplement;
+            element.ImplementerId = model.ImplementerId;
             CreateModel(model, element);
             context.SaveChanges();
         }
