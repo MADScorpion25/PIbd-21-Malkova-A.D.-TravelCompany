@@ -13,6 +13,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IWarehouseStorage _warehouseStorage;
         private readonly ITravelStorage _travelStorage;
+        private readonly object locker = new object();
         public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, ITravelStorage travelStorage)
         {
             _orderStorage = orderStorage;
@@ -57,31 +58,6 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             });
         }
 
-        public void FinishOrder(ChangeStatusBindingModel model)
-        {
-            var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
-            if (order == null)
-            {
-                throw new Exception("Не найден заказ");
-            }
-            if (order.Status != OrderStatus.Выполняется)
-            {
-                throw new Exception("Заказ не в статусе \"Выполняется\"");
-            }
-            _orderStorage.Update(new OrderBindingModel
-            {
-                Id = order.Id,
-                TravelId = order.TravelId,
-                ClientId = order.ClientId,
-                Count = order.Count,
-                Sum = order.Sum,
-                DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
-                Status = OrderStatus.Готов,
-                ImplementerId = order.ImplementerId
-            });
-        }
-
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             if (model == null)
@@ -97,36 +73,72 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
 
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
-            var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+            lock (locker)
+            {
+                OrderViewModel order = _orderStorage.GetElement(new OrderBindingModel
+                {
+                    Id = model.OrderId
+                });
+                if (order == null)
+                {
+                    throw new Exception("Не найден заказ");
+                }
+                if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
+                {
+                    throw new Exception("Заказ еще не принят");
+                }
+
+                var updateBindingModel = new OrderBindingModel
+                {
+                    Id = order.Id,
+                    TravelId = order.TravelId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    ClientId = order.ClientId
+                };
+
+                if (!_warehouseStorage.TakeConditionFromWarehouse(_travelStorage.GetElement
+                    (new TravelBindingModel { Id = order.TravelId }).TravelConditions, order.Count))
+                {
+                    updateBindingModel.Status = OrderStatus.Требуются_материалы;
+                }
+                else
+                {
+                    updateBindingModel.DateImplement = DateTime.Now;
+                    updateBindingModel.Status = OrderStatus.Выполняется;
+                    updateBindingModel.ImplementerId = model.ImplementerId;
+                }
+
+                _orderStorage.Update(updateBindingModel);
+            }
+        }
+
+        public void FinishOrder(ChangeStatusBindingModel model)
+        {
+            var order = _orderStorage.GetElement(new OrderBindingModel
+            {
+                Id = model.OrderId
+            });
             if (order == null)
             {
                 throw new Exception("Не найден заказ");
             }
-            if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
+            if (order.Status != OrderStatus.Выполняется)
             {
-                throw new Exception("Заказ не в статусе \"Принят\"");
-            }
-            if(!_warehouseStorage.TakeConditionFromWarehouse(_travelStorage.GetElement(new TravelBindingModel { Id = order.TravelId}).TravelConditions, order.Count))
-            {
-                order.Status = OrderStatus.Требуются_материалы;
-            }
-            else
-            {
-                order.Status = OrderStatus.Выполняется;
-                order.ImplementerId = model.ImplementerId;
-                order.DateImplement = DateTime.Now;
+                throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
                 TravelId = order.TravelId,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                Status = order.Status,
-                ImplementerId = order.ImplementerId
+                Status = OrderStatus.Готов
             });
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TravelCompanyContracts.BindingModels;
+using TravelCompanyContracts.Enums;
 using TravelCompanyContracts.StorageContracts;
 using TravelCompanyContracts.ViewModels;
 using TravelCompanyFileImplement.Models;
@@ -32,12 +33,12 @@ namespace TravelCompanyFileImplement.Implements
                 return null;
             }
             return source.Orders
-                .Where(rec => rec.TravelId.ToString().Contains(model.TravelId.ToString()) 
-                || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) 
-                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) 
-                || (model.ClientId.HasValue && rec.ClientId == model.ClientId) 
-                || (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status) 
-                || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
+                .Where(rec => rec.TravelId.ToString().Contains(model.TravelId.ToString())
+                    || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
+                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId)
+                    || (model.SearchStatus.HasValue && !rec.ImplementerId.HasValue)
+                    || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
                 .Select(CreateModel)
                 .ToList();
         }
