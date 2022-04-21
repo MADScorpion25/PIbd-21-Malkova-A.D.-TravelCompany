@@ -9,6 +9,7 @@ namespace TravelCompanyDatabaseImplement.Models
         public int Id { get; set; }
         public int TravelId { get; set; }
         public int ClientId { get; set; }
+        public int? ImplementerId { get; set; }
 
         [Required]
         public int Count { get; set; }
@@ -24,5 +25,6 @@ namespace TravelCompanyDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
         public virtual Travel Travel { get; set; }
         public virtual Client Client { get; set; }
+        public virtual Implementer Implementer { get; set; }
     }
 }

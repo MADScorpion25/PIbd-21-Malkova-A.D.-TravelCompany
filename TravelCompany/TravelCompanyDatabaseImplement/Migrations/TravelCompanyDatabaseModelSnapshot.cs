@@ -59,6 +59,27 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.ToTable("Conditions");
                 });
 
+            modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImplementerFIO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -78,6 +99,9 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.Property<DateTime?>("DateImplement")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -90,6 +114,8 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.HasIndex("TravelId");
 
@@ -148,6 +174,10 @@ namespace TravelCompanyDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TravelCompanyDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany("Orders")
+                        .HasForeignKey("ImplementerId");
+
                     b.HasOne("TravelCompanyDatabaseImplement.Models.Travel", "Travel")
                         .WithMany("Orders")
                         .HasForeignKey("TravelId")
@@ -155,6 +185,8 @@ namespace TravelCompanyDatabaseImplement.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+
+                    b.Navigation("Implementer");
 
                     b.Navigation("Travel");
                 });
@@ -186,6 +218,11 @@ namespace TravelCompanyDatabaseImplement.Migrations
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Condition", b =>
                 {
                     b.Navigation("TravelConditions");
+                });
+
+            modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Travel", b =>

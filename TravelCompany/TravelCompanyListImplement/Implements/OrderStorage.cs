@@ -38,9 +38,11 @@ namespace TravelCompanyListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id.Equals(model.Id) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date
-                && order.DateCreate.Date <= model.DateTo.Value.Date) || (model.ClientId.HasValue && order.ClientId == model.ClientId))
+                if (order.Id.Equals(model.Id) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) 
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date) 
+                    || (model.ClientId.HasValue && order.ClientId == model.ClientId)
+                    || (model.SearchStatus.HasValue && model.SearchStatus.Value == order.Status)
+                    || (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && model.Status == order.Status))
                 {
                     result.Add(CreateModel(order));
                 }
@@ -105,6 +107,7 @@ namespace TravelCompanyListImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ImplementerId = model.ImplementerId;
             return order;
         }
         private OrderViewModel CreateModel(Order order)
@@ -127,6 +130,14 @@ namespace TravelCompanyListImplement.Implements
                     clientFIO = client.ClientFIO;
                 }
             }
+            string implementerFIO = null;
+            foreach (var implementer in source.Implementers)
+            {
+                if (implementer.Id == order.ImplementerId)
+                {
+                    implementerFIO = implementer.ImplementerFIO;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -138,6 +149,8 @@ namespace TravelCompanyListImplement.Implements
                 Status = order.Status,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementerFIO
             };
         }
     }
