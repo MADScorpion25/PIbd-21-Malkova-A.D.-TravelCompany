@@ -13,7 +13,6 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IWarehouseStorage _warehouseStorage;
         private readonly ITravelStorage _travelStorage;
-        private readonly object locker = new object();
         public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, ITravelStorage travelStorage)
         {
             _orderStorage = orderStorage;
@@ -73,45 +72,42 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
 
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
-            lock (locker)
+            OrderViewModel order = _orderStorage.GetElement(new OrderBindingModel
             {
-                OrderViewModel order = _orderStorage.GetElement(new OrderBindingModel
-                {
-                    Id = model.OrderId
-                });
-                if (order == null)
-                {
-                    throw new Exception("Не найден заказ");
-                }
-                if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
-                {
-                    throw new Exception("Заказ еще не принят");
-                }
-
-                var updateBindingModel = new OrderBindingModel
-                {
-                    Id = order.Id,
-                    TravelId = order.TravelId,
-                    Count = order.Count,
-                    Sum = order.Sum,
-                    DateCreate = order.DateCreate,
-                    ClientId = order.ClientId
-                };
-
-                if (!_warehouseStorage.TakeConditionFromWarehouse(_travelStorage.GetElement
-                    (new TravelBindingModel { Id = order.TravelId }).TravelConditions, order.Count))
-                {
-                    updateBindingModel.Status = OrderStatus.Требуются_материалы;
-                }
-                else
-                {
-                    updateBindingModel.DateImplement = DateTime.Now;
-                    updateBindingModel.Status = OrderStatus.Выполняется;
-                    updateBindingModel.ImplementerId = model.ImplementerId;
-                }
-
-                _orderStorage.Update(updateBindingModel);
+                Id = model.OrderId
+            });
+            if (order == null)
+            {
+                throw new Exception("Не найден заказ");
             }
+            if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
+            {
+                throw new Exception("Заказ еще не принят");
+            }
+
+            var updateBindingModel = new OrderBindingModel
+            {
+                Id = order.Id,
+                TravelId = order.TravelId,
+                Count = order.Count,
+                Sum = order.Sum,
+                DateCreate = order.DateCreate,
+                ClientId = order.ClientId
+            };
+
+            if (!_warehouseStorage.TakeConditionFromWarehouse(_travelStorage.GetElement
+                (new TravelBindingModel { Id = order.TravelId }).TravelConditions, order.Count))
+            {
+                updateBindingModel.Status = OrderStatus.Требуются_материалы;
+            }
+            else
+            {
+                updateBindingModel.DateImplement = DateTime.Now;
+                updateBindingModel.Status = OrderStatus.Выполняется;
+                updateBindingModel.ImplementerId = model.ImplementerId;
+            }
+
+            _orderStorage.Update(updateBindingModel);
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)
