@@ -52,7 +52,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                Status = OrderStatus.Выдан
+                Status = OrderStatus.Выдан,
+                ImplementerId = order.ImplementerId
             });
         }
 
@@ -76,7 +77,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = DateTime.Now,
-                Status = OrderStatus.Готов
+                Status = OrderStatus.Готов,
+                ImplementerId = order.ImplementerId
             });
         }
 
@@ -100,13 +102,19 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             {
                 throw new Exception("Не найден заказ");
             }
-            if (order.Status != OrderStatus.Принят)
+            if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_материалы)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
             if(!_warehouseStorage.TakeConditionFromWarehouse(_travelStorage.GetElement(new TravelBindingModel { Id = order.TravelId}).TravelConditions, order.Count))
             {
-                throw new Exception("Недостаточно условий для принятия в работу заказа");
+                order.Status = OrderStatus.Требуются_материалы;
+            }
+            else
+            {
+                order.Status = OrderStatus.Выполняется;
+                order.ImplementerId = model.ImplementerId;
+                order.DateImplement = DateTime.Now;
             }
             _orderStorage.Update(new OrderBindingModel
             {
@@ -117,7 +125,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                Status = OrderStatus.Выполняется
+                Status = order.Status,
+                ImplementerId = order.ImplementerId
             });
         }
     }

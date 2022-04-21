@@ -127,7 +127,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             catch
             {
                 transaction.Rollback();
-                throw;
+                return false;
             }
         }
 

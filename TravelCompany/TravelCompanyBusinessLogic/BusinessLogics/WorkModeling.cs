@@ -51,13 +51,47 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 // делаем работу заново
                 Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) *
                 order.Count);
+
                 _orderLogic.FinishOrder(new ChangeStatusBindingModel
                 {
                     OrderId
                 = order.Id
                 });
+
                 // отдыхаем
                 Thread.Sleep(implementer.PauseTime);
+            }
+            var requireMaterialOrders = await Task.Run(() => _orderLogic.Read(new
+            OrderBindingModel
+            {
+                ImplementerId = implementer.Id,
+                Status = OrderStatus.Требуются_материалы
+            }));
+
+            foreach (var order in requireMaterialOrders)
+            {
+                try
+                {
+                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                    {
+                        OrderId = order.Id
+                    });
+
+                    var processedOrder = _orderLogic.Read(new OrderBindingModel
+                    {
+                        Id = order.Id
+                    })[0];
+
+                    if (processedOrder.Status == OrderStatus.Требуются_материалы)
+                    {
+                        continue;
+                    }
+
+                    Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                    _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = order.Id });
+                    Thread.Sleep(implementer.PauseTime);
+                }
+                catch (Exception) { }
             }
             await Task.Run(() =>
             {
@@ -65,18 +99,16 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 {
                     if (orders.TryTake(out OrderViewModel order))
                     {
-                        // пытаемся назначить заказ на исполнителя
-                        _orderLogic.TakeOrderInWork(new
-                        ChangeStatusBindingModel
-                        { OrderId = order.Id, ImplementerId = implementer.Id });
-                        // делаем работу
-                        Thread.Sleep(implementer.WorkingTime *
-                        rnd.Next(1, 5) * order.Count);
-                        _orderLogic.FinishOrder(new
-                        ChangeStatusBindingModel
-                        { OrderId = order.Id });
-                        // отдыхаем
-                        Thread.Sleep(implementer.PauseTime);
+                        try
+                        {
+                            _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = order.Id, ImplementerId = implementer.Id });
+                            // делаем работу
+                            Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                            _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = order.Id, ImplementerId = implementer.Id });
+                            // отдыхаем
+                            Thread.Sleep(implementer.PauseTime);
+                        }
+                        catch (Exception) { }
                     }
                 }
             });
