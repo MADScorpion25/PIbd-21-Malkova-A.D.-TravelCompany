@@ -14,7 +14,9 @@ namespace TravelCompanyDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             TravelCompanyDatabase context = new TravelCompanyDatabase();
-            return context.Orders.Include(rec => rec.Travel)
+            return context.Orders
+                .Include(rec => rec.Travel)
+                .Include(rec => rec.Client)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
@@ -37,7 +39,9 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             TravelCompanyDatabase context = new TravelCompanyDatabase();
-            return context.Orders.Include(rec => rec.Travel)
+            return context.Orders
+                .Include(rec => rec.Travel)
+                .Include(rec => rec.Client)
                 .Where(rec => rec.TravelId == model.TravelId || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
                 && rec.DateCreate.Date <= model.DateTo.Value.Date) || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
@@ -65,6 +69,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             TravelCompanyDatabase context = new TravelCompanyDatabase();
             Order order = context.Orders
                  .Include(rec => rec.Travel)
+                 .Include(rec => rec.Client)
                  .FirstOrDefault(rec => rec.Id == model.Id);
             return order != null ? new OrderViewModel
             {
@@ -154,20 +159,6 @@ namespace TravelCompanyDatabaseImplement.Implements
                 throw new Exception("Элемент не найден");
             }
             return order;
-        }
-        private OrderViewModel CreateModel(Order order)
-        {
-            return new OrderViewModel
-            {
-                Id = order.Id,
-                TravelId = order.TravelId,
-                TravelName = order.Travel.TravelName,
-                Count = order.Count,
-                Sum = order.Sum,
-                Status = order.Status,
-                DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
-            };
         }
     }
 }
