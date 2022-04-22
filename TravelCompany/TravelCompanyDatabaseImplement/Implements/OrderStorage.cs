@@ -23,7 +23,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                     TravelId = rec.TravelId,
                     TravelName = rec.Travel.TravelName,
                     ClientId = rec.ClientId,
-                    ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).ClientFIO,
+                    ClientFIO = rec.Client.ClientFIO,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -42,16 +42,17 @@ namespace TravelCompanyDatabaseImplement.Implements
             return context.Orders
                 .Include(rec => rec.Travel)
                 .Include(rec => rec.Client)
-                .Where(rec => rec.TravelId == model.TravelId || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
-                && rec.DateCreate.Date <= model.DateTo.Value.Date) || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                .Where(rec => rec.TravelId == model.TravelId
+                    || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
+                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     TravelId = rec.TravelId,
                     TravelName = rec.Travel.TravelName,
                     ClientId = rec.ClientId,
-                    ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).ClientFIO,
+                    ClientFIO = rec.Client.ClientFIO,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -77,7 +78,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 TravelId = order.TravelId,
                 TravelName = order.Travel.TravelName,
                 ClientId = order.ClientId,
-                ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == order.ClientId)?.ClientFIO,
+                ClientFIO = order.Client.ClientFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

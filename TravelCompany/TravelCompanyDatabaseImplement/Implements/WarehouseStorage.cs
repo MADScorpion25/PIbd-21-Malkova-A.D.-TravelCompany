@@ -95,8 +95,6 @@ namespace TravelCompanyDatabaseImplement.Implements
                     int count = warehouseCondition.Value.Item2 * orderCount;
                     IEnumerable<WarehouseCondition> warehouseConditions = context.WarehouseConditions
                         .Where(warehouse => warehouse.ConditionId == warehouseCondition.Key);
-
-                    int totalCount = warehouseConditions.Sum(warehouse => warehouse.Count);
                     foreach (var component in warehouseConditions)
                     {
                         if (component.Count <= count)

@@ -38,7 +38,8 @@ namespace TravelCompanyListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.Id.Equals(model.Id) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
+                if (order.Id.Equals(model.Id)
+                    || (!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
                     || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date)
                     || (model.ClientId.HasValue && order.ClientId == model.ClientId))
                 {
@@ -125,6 +126,7 @@ namespace TravelCompanyListImplement.Implements
                 if (client.Id == order.TravelId)
                 {
                     clientFIO = client.ClientFIO;
+                    break;
                 }
             }
             return new OrderViewModel
