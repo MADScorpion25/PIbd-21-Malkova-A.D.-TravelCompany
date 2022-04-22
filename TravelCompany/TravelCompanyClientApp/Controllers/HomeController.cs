@@ -37,8 +37,7 @@ namespace TravelCompanyClientApp.Controllers
         [HttpPost]
         public void Privacy(string login, string password, string fio)
         {
-            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password)
-            && !string.IsNullOrEmpty(fio))
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(fio))
             {
                 APIClient.PostRequest("api/client/updatedata", 
                 new ClientBindingModel
@@ -56,14 +55,12 @@ namespace TravelCompanyClientApp.Controllers
             }
             throw new Exception("Введите логин, пароль и ФИО");
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore
-        = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel
             {
-                RequestId = Activity.Current?.Id ??
-            HttpContext.TraceIdentifier
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             });
         }
         [HttpGet]

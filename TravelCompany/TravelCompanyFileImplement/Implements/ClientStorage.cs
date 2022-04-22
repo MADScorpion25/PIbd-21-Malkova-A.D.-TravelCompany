@@ -85,7 +85,7 @@ namespace TravelCompanyFileImplement.Implements
                 Id = client.Id,
                 Login = client.Login,
                 Password = client.Password,
-                ClientFIO = client.ClientFIO,
+                ClientFIO = client.ClientFIO
             };
         }
     }

@@ -14,14 +14,16 @@ namespace TravelCompanyDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             TravelCompanyDatabase context = new TravelCompanyDatabase();
-            return context.Orders.Include(rec => rec.Travel)
+            return context.Orders
+                .Include(rec => rec.Travel)
+                .Include(rec => rec.Client)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     TravelId = rec.TravelId,
                     TravelName = rec.Travel.TravelName,
                     ClientId = rec.ClientId,
-                    ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).ClientFIO,
+                    ClientFIO = rec.Client.ClientFIO,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -37,17 +39,20 @@ namespace TravelCompanyDatabaseImplement.Implements
                 return null;
             }
             TravelCompanyDatabase context = new TravelCompanyDatabase();
-            return context.Orders.Include(rec => rec.Travel)
-                .Where(rec => rec.TravelId == model.TravelId || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
-                && rec.DateCreate.Date <= model.DateTo.Value.Date) || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+            return context.Orders
+                .Include(rec => rec.Travel)
+                .Include(rec => rec.Client)
+                .Where(rec => rec.TravelId == model.TravelId 
+                    || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
+                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     TravelId = rec.TravelId,
                     TravelName = rec.Travel.TravelName,
                     ClientId = rec.ClientId,
-                    ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == rec.ClientId).ClientFIO,
+                    ClientFIO = rec.Client.ClientFIO,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -65,6 +70,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             TravelCompanyDatabase context = new TravelCompanyDatabase();
             Order order = context.Orders
                  .Include(rec => rec.Travel)
+                 .Include(rec => rec.Client)
                  .FirstOrDefault(rec => rec.Id == model.Id);
             return order != null ? new OrderViewModel
             {
@@ -72,7 +78,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 TravelId = order.TravelId,
                 TravelName = order.Travel.TravelName,
                 ClientId = order.ClientId,
-                ClientFIO = context.Clients.Include(x => x.Orders).FirstOrDefault(x => x.Id == order.ClientId)?.ClientFIO,
+                ClientFIO = order.Client.ClientFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

@@ -78,8 +78,7 @@ namespace TravelCompanyDatabaseImplement.Implements
         {
             using (var context = new TravelCompanyDatabase())
             {
-                var element = context.Clients.FirstOrDefault(rec => rec.Id ==
-                model.Id);
+                var element = context.Clients.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
                     throw new Exception("Клиент не найден");
