@@ -43,6 +43,7 @@ namespace TravelCompanyView
             this.TravelListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TravelConditionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OrderListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -123,7 +124,8 @@ namespace TravelCompanyView
             // 
             this.toolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.conditionToolStripMenuItem,
-            this.travelToolStripMenuItem});
+            this.travelToolStripMenuItem,
+            this.clientToolStripMenuItem});
             this.toolStripMenuItem.Name = "toolStripMenuItem";
             this.toolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.toolStripMenuItem.Text = "Справочники";
@@ -167,6 +169,12 @@ namespace TravelCompanyView
             this.OrderListToolStripMenuItem.Name = "OrderListToolStripMenuItem";
             this.OrderListToolStripMenuItem.Size = new System.Drawing.Size(240, 26);
             this.OrderListToolStripMenuItem.Text = "Список заказов";
+            // 
+            // clientToolStripMenuItem
+            // 
+            this.clientToolStripMenuItem.Name = "clientToolStripMenuItem";
+            this.clientToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.clientToolStripMenuItem.Text = "Клиенты";
             // 
             // FormMain
             // 
@@ -214,6 +222,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem ordersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TravelListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OrderListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientToolStripMenuItem;
     }
 }
 
