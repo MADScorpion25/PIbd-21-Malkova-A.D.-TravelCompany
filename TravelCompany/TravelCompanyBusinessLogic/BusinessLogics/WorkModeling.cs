@@ -54,8 +54,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
 
                 _orderLogic.FinishOrder(new ChangeStatusBindingModel
                 {
-                    OrderId
-                = order.Id
+                    OrderId = order.Id
                 });
 
                 // отдыхаем
