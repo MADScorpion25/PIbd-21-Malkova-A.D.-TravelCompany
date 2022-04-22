@@ -65,6 +65,10 @@ namespace TravelCompanyView
                     dataGridView.Columns[2].Visible = false;
                     dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
