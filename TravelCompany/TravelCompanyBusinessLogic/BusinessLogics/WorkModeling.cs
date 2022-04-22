@@ -53,8 +53,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 order.Count);
                 _orderLogic.FinishOrder(new ChangeStatusBindingModel
                 {
-                    OrderId
-                = order.Id
+                    OrderId = order.Id
                 });
                 // отдыхаем
                 Thread.Sleep(implementer.PauseTime);
@@ -65,16 +64,10 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 {
                     if (orders.TryTake(out OrderViewModel order))
                     {
-                        // пытаемся назначить заказ на исполнителя
-                        _orderLogic.TakeOrderInWork(new
-                        ChangeStatusBindingModel
-                        { OrderId = order.Id, ImplementerId = implementer.Id });
+                        _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = order.Id, ImplementerId = implementer.Id });
                         // делаем работу
-                        Thread.Sleep(implementer.WorkingTime *
-                        rnd.Next(1, 5) * order.Count);
-                        _orderLogic.FinishOrder(new
-                        ChangeStatusBindingModel
-                        { OrderId = order.Id });
+                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                        _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = order.Id, ImplementerId = implementer.Id });
                         // отдыхаем
                         Thread.Sleep(implementer.PauseTime);
                     }

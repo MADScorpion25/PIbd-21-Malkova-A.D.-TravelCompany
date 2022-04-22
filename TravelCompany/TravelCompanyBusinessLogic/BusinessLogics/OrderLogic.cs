@@ -48,7 +48,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                Status = OrderStatus.Выдан
+                Status = OrderStatus.Выдан,
+                ImplementerId = order.ImplementerId
             });
         }
 
@@ -72,7 +73,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = DateTime.Now,
-                Status = OrderStatus.Готов
+                Status = OrderStatus.Готов,
+                ImplementerId = model.ImplementerId
             });
         }
 
@@ -109,7 +111,8 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
-                Status = OrderStatus.Выполняется
+                Status = OrderStatus.Выполняется,
+                ImplementerId = model.ImplementerId
             });
         }
     }
