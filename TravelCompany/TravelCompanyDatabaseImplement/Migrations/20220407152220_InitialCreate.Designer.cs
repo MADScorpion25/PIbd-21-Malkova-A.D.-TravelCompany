@@ -10,7 +10,7 @@ using TravelCompanyDatabaseImplement;
 namespace TravelCompanyDatabaseImplement.Migrations
 {
     [DbContext(typeof(TravelCompanyDatabase))]
-    [Migration("20220323144019_InitialCreate")]
+    [Migration("20220407152220_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,30 @@ namespace TravelCompanyDatabaseImplement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Condition", b =>
                 {
@@ -44,6 +68,9 @@ namespace TravelCompanyDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
@@ -63,6 +90,8 @@ namespace TravelCompanyDatabaseImplement.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("TravelId");
 
@@ -163,11 +192,19 @@ namespace TravelCompanyDatabaseImplement.Migrations
 
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Order", b =>
                 {
+                    b.HasOne("TravelCompanyDatabaseImplement.Models.Client", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TravelCompanyDatabaseImplement.Models.Travel", "Travel")
                         .WithMany("Orders")
                         .HasForeignKey("TravelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
 
                     b.Navigation("Travel");
                 });
@@ -208,6 +245,11 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.Navigation("Condition");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Condition", b =>

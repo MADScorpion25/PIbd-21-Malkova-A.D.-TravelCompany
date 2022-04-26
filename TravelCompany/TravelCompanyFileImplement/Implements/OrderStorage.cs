@@ -32,9 +32,10 @@ namespace TravelCompanyFileImplement.Implements
                 return null;
             }
             return source.Orders
-                .Where(rec => rec.TravelId.ToString().Contains(model.TravelId.ToString()) || ((!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date
-                && rec.DateCreate.Date <= model.DateTo.Value.Date)))
+                .Where(rec => rec.TravelId.ToString().Contains(model.TravelId.ToString())
+                    || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
+                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
+                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
                 .Select(CreateModel)
                 .ToList();
         }
@@ -75,6 +76,7 @@ namespace TravelCompanyFileImplement.Implements
         private Order CreateModel(OrderBindingModel model, Order order)
         {
             order.TravelId = model.TravelId;
+            order.ClientId = (int)model.ClientId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -87,13 +89,15 @@ namespace TravelCompanyFileImplement.Implements
             return new OrderViewModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
+                ClientFIO = source.Clients.FirstOrDefault(rec => rec.Id == order.ClientId)?.ClientFIO,
                 TravelId = order.TravelId,
-                TravelName = source.Travels.FirstOrDefault(travel => travel.Id == order.TravelId)?.TravelName,
+                TravelName = source.Travels.FirstOrDefault(x => x.Id == order.TravelId)?.TravelName,
                 Count = order.Count,
                 Sum = order.Sum,
-                Status = order.Status,
                 DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement,
+                Status = order.Status,
+                DateImplement = order.DateImplement
             };
         }
     }

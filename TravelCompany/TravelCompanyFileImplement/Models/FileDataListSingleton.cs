@@ -14,16 +14,21 @@ namespace TravelCompanyFileImplement.Models
         private readonly string OrderFileName = "D:\\DataXML\\Order.xml";
         private readonly string TravelFileName = "D:\\DataXML\\Travel.xml";
         private readonly string WarehouseFileName = "D:\\DataXML\\Warehouse.xml";
+        private readonly string ClientFileName = "D:\\DataXML\\Client.xml";
         public List<Condition> Conditions { get; set; }
         public List<Order> Orders { get; set; }
         public List<Travel> Travels { get; set; }
         public List<Warehouse> Warehouses { get; set; }
+
+        public List<Client> Clients { get; set; }
+
         private FileDataListSingleton()
         {
             Conditions = LoadConditions();
             Orders = LoadOrders();
             Travels = LoadTravels();
             Warehouses = LoadWarehouses();
+            Clients = LoadClients();
         }
         public void Save()
         {
@@ -31,6 +36,7 @@ namespace TravelCompanyFileImplement.Models
             SaveOrders();
             SaveTravels();
             SaveWarehouses();
+            SaveClients();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -116,7 +122,7 @@ namespace TravelCompanyFileImplement.Models
             {
                 var xDocument = XDocument.Load(WarehouseFileName);
                 var xElements = xDocument.Root.Elements("Warehouse").ToList();
-                foreach(var elem in xElements)
+                foreach (var elem in xElements)
                 {
                     var prodComp = new Dictionary<int, int>();
                     foreach (var condition in elem.Element("WarehouseConditions").Elements("WarehouseCondition").ToList())
@@ -131,6 +137,26 @@ namespace TravelCompanyFileImplement.Models
                         ResponsibleFullName = elem.Element("ResponsibleFullName").Value,
                         CreateDate = Convert.ToDateTime(elem.Element("CreateDate").Value),
                         WarehouseConditions = prodComp
+                    });
+                }
+            }
+            return list;
+        }
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+            if (File.Exists(ClientFileName))
+            {
+                XDocument xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Client
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ClientFIO = elem.Element("ClientFIO").Value,
+                        Login = elem.Element("Login").Value,
+                        Password = elem.Element("Password").Value,
                     });
                 }
             }
@@ -195,15 +221,16 @@ namespace TravelCompanyFileImplement.Models
                 xDocument.Save(TravelFileName);
             }
         }
+
         private void SaveWarehouses()
         {
-            if(Warehouses != null)
+            if (Warehouses != null)
             {
                 var xElement = new XElement("Warehouses");
-                foreach(var warehouse in Warehouses)
+                foreach (var warehouse in Warehouses)
                 {
                     var warehouseElement = new XElement("WarehouseConditions");
-                    foreach(var condition in warehouse.WarehouseConditions)
+                    foreach (var condition in warehouse.WarehouseConditions)
                     {
                         warehouseElement.Add(new XElement("WarehouseCondition",
                             new XElement("Key", condition.Key),
@@ -218,6 +245,25 @@ namespace TravelCompanyFileImplement.Models
                 }
                 var xDocument = new XDocument(xElement);
                 xDocument.Save(WarehouseFileName);
+            }
+        }
+
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Client",
+                    new XAttribute("Id", client.Id),
+                    new XElement("ClientFIO", client.ClientFIO),
+                    new XElement("Login", client.Login),
+                    new XElement("Password", client.Password)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ClientFileName);
+
             }
         }
     }

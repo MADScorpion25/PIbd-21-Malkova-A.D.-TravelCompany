@@ -11,6 +11,7 @@ namespace TravelCompanyDatabaseImplement.Implements
 {
     public class WarehouseStorage : IWarehouseStorage
     {
+
         public void Delete(WarehouseBindingModel model)
         {
             var context = new TravelCompanyDatabase();
@@ -36,7 +37,6 @@ namespace TravelCompanyDatabaseImplement.Implements
                     .Include(rec => rec.WarehouseConditions)
                     .ThenInclude(rec => rec.Condition)
                     .FirstOrDefault(rec => rec.WarehouseName == model.WarehouseName || rec.Id == model.Id);
-
             return warehouse != null ? CreateModel(warehouse) : null;
         }
 
@@ -95,8 +95,6 @@ namespace TravelCompanyDatabaseImplement.Implements
                     int count = warehouseCondition.Value.Item2 * orderCount;
                     IEnumerable<WarehouseCondition> warehouseConditions = context.WarehouseConditions
                         .Where(warehouse => warehouse.ConditionId == warehouseCondition.Key);
-
-                    int totalCount = warehouseConditions.Sum(warehouse => warehouse.Count);
                     foreach (var component in warehouseConditions)
                     {
                         if (component.Count <= count)

@@ -23,6 +23,7 @@ namespace TravelCompanyView
                     mainItem.DropDownItems[0].Click += conditionToolStripMenuItem_Click;
                     mainItem.DropDownItems[1].Click += travelToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += warehousesToolStripMenuItem_Click;
+                    mainItem.DropDownItems[3].Click += clientToolStripMenuItem_Click;
                 }
                 else if(mainItem.Text.Equals("Пополнить склад"))
                 {
@@ -30,7 +31,7 @@ namespace TravelCompanyView
                 }
                 else
                 {
-                    mainItem.DropDownItems[0].Click += travelListToolStripMenuItem_Click;
+                    mainItem.DropDownItems[0].Click += travelsListToolStripMenuItem_Click;
                     mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += ordersListToolStripMenuItem_Click;
                     mainItem.DropDownItems[3].Click += warehousesListToolStripMenuItem_Click;
@@ -54,7 +55,8 @@ namespace TravelCompanyView
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[2].Visible = false;
+                    dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
@@ -82,7 +84,13 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormWarehouseCondition>();
             form.ShowDialog();
         }
-        private void travelListToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void clientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormClients>();
+            form.ShowDialog();
+        }
+        private void travelsListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
