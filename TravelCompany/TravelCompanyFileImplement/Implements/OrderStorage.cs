@@ -32,10 +32,12 @@ namespace TravelCompanyFileImplement.Implements
                 return null;
             }
             return source.Orders
-                .Where(rec => rec.TravelId.ToString().Contains(model.TravelId.ToString())
-                    || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
-                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
-                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                .Where(rec => rec.TravelId.ToString().Contains(model.TravelId.ToString()) 
+                || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) 
+                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) 
+                || (model.ClientId.HasValue && rec.ClientId == model.ClientId) 
+                || (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status) 
+                || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
                 .Select(CreateModel)
                 .ToList();
         }
@@ -82,6 +84,7 @@ namespace TravelCompanyFileImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ImplementerId = model.ImplementerId;
             return order;
         }
         private OrderViewModel CreateModel(Order order)
@@ -97,7 +100,9 @@ namespace TravelCompanyFileImplement.Implements
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 Status = order.Status,
-                DateImplement = order.DateImplement
+                DateImplement = order.DateImplement,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO
             };
         }
     }
