@@ -10,6 +10,7 @@ namespace TravelCompanyListImplement.Models
         public List<Travel> Travels { get; set; }
         public List<Client> Clients { get; set; }
         public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> MessageInfoes { get; set; }
         private DataListSingleton()
         {
             Conditions = new List<Condition>();
@@ -17,6 +18,7 @@ namespace TravelCompanyListImplement.Models
             Travels = new List<Travel>();
             Clients = new List<Client>();
             Implementers = new List<Implementer>();
+            MessageInfoes = new List<MessageInfo>();
         }
         public static DataListSingleton GetInstance()
         {

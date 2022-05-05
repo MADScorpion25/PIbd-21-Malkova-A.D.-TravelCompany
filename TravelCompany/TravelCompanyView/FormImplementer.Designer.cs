@@ -137,9 +137,6 @@ namespace TravelCompanyView
         private System.Windows.Forms.TextBox textBoxRestTime;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ButtonCancel;
-        private System.Windows.Forms.Button Bu;
-        private System.Windows.Forms.Button B;
-        private System.Windows.Forms.Button utton;
         private System.Windows.Forms.Button ButtonSave;
     }
 }
