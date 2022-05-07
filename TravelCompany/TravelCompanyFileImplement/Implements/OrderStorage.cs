@@ -103,7 +103,7 @@ namespace TravelCompanyFileImplement.Implements
                 Status = order.Status,
                 DateImplement = order.DateImplement,
                 ImplementerId = order.ImplementerId,
-                ImplementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO
+                ImplementerFIO = order.ImplementerId.HasValue ? source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO : string.Empty
             };
         }
     }

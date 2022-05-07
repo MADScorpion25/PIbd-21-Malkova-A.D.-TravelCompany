@@ -95,12 +95,6 @@ namespace TravelCompanyDatabaseImplement.Implements
                     int count = warehouseCondition.Value.Item2 * orderCount;
                     IEnumerable<WarehouseCondition> warehouseConditions = context.WarehouseConditions
                         .Where(warehouse => warehouse.ConditionId == warehouseCondition.Key);
-                    int totalCount = warehouseConditions.Sum(warehouse => warehouse.Count);
-                    if (totalCount < count)
-                    {
-                        throw new Exception("Недостаточно условий поездок на складе");
-                    }
-
                     foreach (var component in warehouseConditions)
                     {
                         if (component.Count <= count)
@@ -120,6 +114,10 @@ namespace TravelCompanyDatabaseImplement.Implements
                             break;
                         }
                     }
+                    if (count != 0)
+                    {
+                        throw new Exception("Недостаточно условий для передания заказа в работу");
+                    }
                 }
                 transaction.Commit();
                 return true;
@@ -127,7 +125,7 @@ namespace TravelCompanyDatabaseImplement.Implements
             catch
             {
                 transaction.Rollback();
-                return false;
+                throw;
             }
         }
 

@@ -130,14 +130,19 @@ namespace TravelCompanyListImplement.Implements
                 if (client.Id == order.TravelId)
                 {
                     clientFIO = client.ClientFIO;
+                    break;
                 }
             }
             string implementerFIO = null;
-            foreach (var implementer in source.Implementers)
+            if(order.ImplementerId != null)
             {
-                if (implementer.Id == order.ImplementerId)
+                foreach (var implementer in source.Implementers)
                 {
-                    implementerFIO = implementer.ImplementerFIO;
+                    if (implementer.Id == order.ImplementerId)
+                    {
+                        implementerFIO = implementer.ImplementerFIO;
+                        break;
+                    }
                 }
             }
             return new OrderViewModel
