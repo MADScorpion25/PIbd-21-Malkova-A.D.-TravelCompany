@@ -14,16 +14,19 @@ namespace TravelCompanyFileImplement.Models
         private readonly string OrderFileName = "D:\\DataXML\\Order.xml";
         private readonly string TravelFileName = "D:\\DataXML\\Travel.xml";
         private readonly string ClientFileName = "D:\\DataXML\\Client.xml";
+        private readonly string ImplementerFileName = "D:\\DataXML\\Implementer.xml";
         public List<Condition> Conditions { get; set; }
         public List<Order> Orders { get; set; }
         public List<Travel> Travels { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
         private FileDataListSingleton()
         {
             Conditions = LoadConditions();
             Orders = LoadOrders();
             Travels = LoadTravels();
             Clients = LoadClients();
+            Implementers = LoadImplementers();
         }
         public void Save()
         {
@@ -31,6 +34,7 @@ namespace TravelCompanyFileImplement.Models
             SaveOrders();
             SaveTravels();
             SaveClients();
+            SaveImplementers();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -129,6 +133,26 @@ namespace TravelCompanyFileImplement.Models
             }
             return list;
         }
+        private List<Implementer> LoadImplementers()
+        {
+            var list = new List<Implementer>();
+            if (File.Exists(ImplementerFileName))
+            {
+                XDocument xDocument = XDocument.Load(ImplementerFileName);
+                var xElements = xDocument.Root.Elements("Implementer").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Implementer
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ImplementerFIO = elem.Element("ImplementerFIO").Value,
+                        WorkingTime = Convert.ToInt32(elem.Attribute("WorkingTime").Value),
+                        PauseTime = Convert.ToInt32(elem.Attribute("PauseTime").Value),
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveConditions()
         {
             if (Conditions != null)
@@ -203,6 +227,24 @@ namespace TravelCompanyFileImplement.Models
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(ClientFileName);
+            }
+        }
+        private void SaveImplementers()
+        {
+            if (Implementers != null)
+            {
+                var xElement = new XElement("Implementers");
+                foreach (var implementer in Implementers)
+                {
+                    xElement.Add(new XElement("Implementer",
+                    new XAttribute("Id", implementer.Id),
+                    new XElement("ImplementerFIO", implementer.ImplementerFIO),
+                    new XElement("WorkingTime", implementer.WorkingTime),
+                    new XElement("PauseTime", implementer.PauseTime)
+                    ));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ImplementerFileName);
             }
         }
     }

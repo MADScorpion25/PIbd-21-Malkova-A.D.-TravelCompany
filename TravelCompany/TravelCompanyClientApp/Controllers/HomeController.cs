@@ -39,7 +39,7 @@ namespace TravelCompanyClientApp.Controllers
         {
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(fio))
             {
-                APIClient.PostRequest("api/client/updatedata", 
+                APIClient.PostRequest("api/client/updatedata",
                 new ClientBindingModel
                 {
                     Id = Program.Client.Id,
