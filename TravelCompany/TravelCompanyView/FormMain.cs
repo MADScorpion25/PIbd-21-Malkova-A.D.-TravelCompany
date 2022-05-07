@@ -11,11 +11,13 @@ namespace TravelCompanyView
     {
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _reportLogic;
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic)
+        private readonly ImplementerLogic _impLogic;
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ImplementerLogic impLogic)
         {
             InitializeComponent();
             _orderLogic = orderLogic;
             _reportLogic = reportLogic;
+            _impLogic = impLogic;
             foreach (ToolStripMenuItem mainItem in menuStrip.Items)
             {
                 if (mainItem.Text.Equals("Справочники"))
@@ -24,12 +26,13 @@ namespace TravelCompanyView
                     mainItem.DropDownItems[1].Click += travelToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += warehousesToolStripMenuItem_Click;
                     mainItem.DropDownItems[3].Click += clientToolStripMenuItem_Click;
+                    mainItem.DropDownItems[4].Click += implementerToolStripMenuItem_Click;
                 }
                 else if(mainItem.Text.Equals("Пополнить склад"))
                 {
-                    mainItem.Click += warehouseAddToolStripMenuItem_Click;;
+                    mainItem.Click += warehouseAddToolStripMenuItem_Click;
                 }
-                else
+                else if(mainItem.Text.Equals("Отчеты"))
                 {
                     mainItem.DropDownItems[0].Click += travelsListToolStripMenuItem_Click;
                     mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
@@ -37,6 +40,10 @@ namespace TravelCompanyView
                     mainItem.DropDownItems[3].Click += warehousesListToolStripMenuItem_Click;
                     mainItem.DropDownItems[4].Click += warehouseConditionsToolStripMenuItem_Click;
                     mainItem.DropDownItems[5].Click += ordersTotalToolStripMenuItem_Click;
+                }
+                else
+                {
+                    mainItem.Click += startWorkToolStripMenuItem_Click; 
                 }
             }
         }
@@ -56,7 +63,12 @@ namespace TravelCompanyView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[3].Visible = false;
+                    dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
@@ -88,6 +100,11 @@ namespace TravelCompanyView
         private void clientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormClients>();
+            form.ShowDialog();
+        }
+        private void implementerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormImplementers>();
             form.ShowDialog();
         }
         private void travelsListToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,50 +153,19 @@ namespace TravelCompanyView
             var form = Program.Container.Resolve<FormReportTotalOrders>();
             form.ShowDialog();
         }
+        private void startWorkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var workModeling = Program.Container.Resolve<WorkModeling>();
+            workModeling.DoWork(_impLogic, _orderLogic);
+            MessageBox.Show("Работы запущены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
 
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
-        }
-
-        private void ButtonTakeInWork_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void ButtonOrderReady_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
-                {
-                    _orderLogic.FinishOrder(new ChangeStatusBindingModel
-                    {
-                        OrderId = id
-                    });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void ButtonOrderDelivered_Click(object sender, EventArgs e)
