@@ -137,5 +137,15 @@ namespace TravelCompanyClientApp.Controllers
             APIClient.GetRequest<TravelViewModel>($"api/main/gettravel?travelId={travel}");
             return count * prod.Price;
         }
+        [HttpGet]
+        public IActionResult Messages()
+        {
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            var model = APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/getmessages?clientId={Program.Client.Id}");
+            return View(model);
+        }
     }
 }

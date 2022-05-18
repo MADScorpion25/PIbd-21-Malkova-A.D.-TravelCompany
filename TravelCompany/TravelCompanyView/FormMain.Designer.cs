@@ -40,6 +40,7 @@ namespace TravelCompanyView
             this.warehousesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addWarehouse = new System.Windows.Forms.ToolStripMenuItem();
             this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.implementerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRep = new System.Windows.Forms.ToolStripMenuItem();
             this.TravelListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConditionTravelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,7 @@ namespace TravelCompanyView
             this.TravelConditionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStartWork = new System.Windows.Forms.ToolStripMenuItem();
-            this.implementerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMessage = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +104,8 @@ namespace TravelCompanyView
             this.toolStripMenuItem,
             this.addWarehouse,
             this.toolStripMenuItemRep,
-            this.toolStripMenuItemStartWork});
+            this.toolStripMenuItemStartWork,
+            this.toolStripMenuItemMessage});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1252, 28);
@@ -150,6 +152,12 @@ namespace TravelCompanyView
             this.clientToolStripMenuItem.Name = "clientToolStripMenuItem";
             this.clientToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
             this.clientToolStripMenuItem.Text = "Клиенты";
+            // 
+            // implementerToolStripMenuItem
+            // 
+            this.implementerToolStripMenuItem.Name = "implementerToolStripMenuItem";
+            this.implementerToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
+            this.implementerToolStripMenuItem.Text = "Исполнители";
             // 
             // toolStripMenuItemRep
             // 
@@ -218,11 +226,11 @@ namespace TravelCompanyView
             this.toolStripMenuItemStartWork.Size = new System.Drawing.Size(125, 24);
             this.toolStripMenuItemStartWork.Text = "Запуск работы";
             // 
-            // implementerToolStripMenuItem
+            // toolStripMenuItemMessage
             // 
-            this.implementerToolStripMenuItem.Name = "implementerToolStripMenuItem";
-            this.implementerToolStripMenuItem.Size = new System.Drawing.Size(252, 26);
-            this.implementerToolStripMenuItem.Text = "Исполнители";
+            this.toolStripMenuItemMessage.Name = "toolStripMenuItemMessage";
+            this.toolStripMenuItemMessage.Size = new System.Drawing.Size(105, 24);
+            this.toolStripMenuItemMessage.Text = "Сообщения";
             // 
             // FormMain
             // 
@@ -277,6 +285,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem clientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWork;
         private System.Windows.Forms.ToolStripMenuItem implementerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMessage;
     }
 }
 

@@ -80,6 +80,33 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.ToTable("Implementers");
                 });
 
+            modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MessageInfoes");
+                });
+
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -214,6 +241,15 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.ToTable("WarehouseConditions");
                 });
 
+            modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("TravelCompanyDatabaseImplement.Models.Client", "Client")
+                        .WithMany("MessageInfoes")
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("TravelCompanyDatabaseImplement.Models.Client", "Client")
@@ -279,6 +315,8 @@ namespace TravelCompanyDatabaseImplement.Migrations
 
             modelBuilder.Entity("TravelCompanyDatabaseImplement.Models.Client", b =>
                 {
+                    b.Navigation("MessageInfoes");
+
                     b.Navigation("Orders");
                 });
 
