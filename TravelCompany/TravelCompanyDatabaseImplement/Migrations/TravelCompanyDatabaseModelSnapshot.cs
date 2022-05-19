@@ -94,6 +94,12 @@ namespace TravelCompanyDatabaseImplement.Migrations
                     b.Property<DateTime>("DateDelivery")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MessageStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReplyText")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SenderName")
                         .HasColumnType("nvarchar(max)");
 

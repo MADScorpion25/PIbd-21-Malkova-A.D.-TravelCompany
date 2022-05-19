@@ -63,7 +63,7 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
             {
                 return _clientStorage.GetFullList();
             }
-            if (model.Id.HasValue)
+            if (model.Id.HasValue || model.Login != null)
             {
                 return new List<ClientViewModel> { _clientStorage.GetElement(model)
 };

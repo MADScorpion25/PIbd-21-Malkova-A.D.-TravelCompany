@@ -31,20 +31,25 @@ namespace TravelCompanyListImplement.Implements
             {
                 return null;
             }
-            List<MessageInfoViewModel> result = new List<MessageInfoViewModel>();
+            int toSkip = model.ToSkip ?? 0;
+            int toTake = model.ToTake ?? source.MessageInfoes.Count;
+            var result = new List<MessageInfoViewModel>();
             foreach (var message in source.MessageInfoes)
             {
-                if ((model.ClientId.HasValue && message.ClientId == model.ClientId) ||
-                (!model.ClientId.HasValue && message.DateDelivery.Date == model.DateDelivery.Date))
+                if (model.ClientId.HasValue ?
+                    (message.ClientId == model.ClientId)
+                    :
+                    (model.ToSkip.HasValue && model.ToTake.HasValue || message.DateDelivery.Date == model.DateDelivery.Date))
                 {
-                    result.Add(CreateModel(message));
+                    if (toSkip > 0) { toSkip--; continue; }
+                    if (toTake > 0)
+                    {
+                        result.Add(CreateModel(message));
+                        toTake--;
+                    }
                 }
             }
-            if (result.Count > 0)
-            {
-                return result;
-            }
-            return null;
+            return result;
         }
         public void Insert(MessageInfoBindingModel model)
         {
@@ -85,6 +90,39 @@ namespace TravelCompanyListImplement.Implements
                 Subject = message.Subject,
                 Body = message.Body,
             };
+        }
+
+        public MessageInfoViewModel GetElement(MessageInfoBindingModel model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+            foreach (var message in source.MessageInfoes)
+            {
+                if (message.MessageId.Equals(model.MessageId))
+                {
+                    return CreateModel(message);
+                }
+            }
+            return null;
+        }
+
+        public void Update(MessageInfoBindingModel model)
+        {
+            MessageInfo testMessage = null;
+            foreach (var message in source.MessageInfoes)
+            {
+                if (message.MessageId.Equals(model.MessageId))
+                {
+                    testMessage = message;
+                }
+            }
+            if (testMessage == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            CreateModel(model, testMessage);
         }
     }
 }

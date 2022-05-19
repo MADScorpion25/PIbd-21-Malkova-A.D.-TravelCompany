@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TravelCompanyContracts.Enums;
 
 namespace TravelCompanyContracts.BindingModels
 {
@@ -12,5 +13,9 @@ namespace TravelCompanyContracts.BindingModels
         public string Subject { get; set; }
         public string Body { get; set; }
         public DateTime DateDelivery { get; set; }
+        public string ReplyText { get; set; }
+        public MessageStatus MessageStatus { get; set; }
+        public int? ToSkip { get; set; }
+        public int? ToTake { get; set; }
     }
 }

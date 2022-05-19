@@ -10,7 +10,7 @@ using TravelCompanyDatabaseImplement;
 namespace TravelCompanyDatabaseImplement.Migrations
 {
     [DbContext(typeof(TravelCompanyDatabase))]
-    [Migration("20220518181154_InitialCreate")]
+    [Migration("20220519115808_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,12 @@ namespace TravelCompanyDatabaseImplement.Migrations
 
                     b.Property<DateTime>("DateDelivery")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MessageStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReplyText")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SenderName")
                         .HasColumnType("nvarchar(max)");

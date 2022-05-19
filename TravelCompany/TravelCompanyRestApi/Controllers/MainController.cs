@@ -13,10 +13,13 @@ namespace TravelCompanyRestApi.Controllers
     {
         private readonly IOrderLogic _order;
         private readonly ITravelLogic _travel;
-        public MainController(IOrderLogic order, ITravelLogic travel)
+        private readonly IMessageInfoLogic _message;
+        private readonly int PAGE_SIZE = 4;
+        public MainController(IOrderLogic order, ITravelLogic travel, IMessageInfoLogic message)
         {
             _order = order;
             _travel = travel;
+            _message = message;
         }
         [HttpGet]
         public List<TravelViewModel> GetTravelList() => _travel.Read(null)?.ToList();
@@ -28,6 +31,19 @@ namespace TravelCompanyRestApi.Controllers
         { ClientId = clientId });
         [HttpPost]
         public void CreateOrder(CreateOrderBindingModel model) => _order.CreateOrder(model);
+        [HttpGet]
+        public (List<MessageInfoViewModel>, bool) GetMessages(int clientId, int page)
+        {
+             var list = _message.Read(new MessageInfoBindingModel
+            {
+                ClientId = clientId,
+                ToSkip = (page - 1) * PAGE_SIZE,
+                ToTake = PAGE_SIZE + 1
+            })
+                .ToList();
+            var hasNext = !(list.Count() <= PAGE_SIZE);
+            return (list.Take(PAGE_SIZE).ToList(), hasNext);
+        }
     }
 }
 
