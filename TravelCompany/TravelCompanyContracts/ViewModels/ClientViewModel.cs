@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using TravelCompanyContracts.Attributes;
 
 namespace TravelCompanyContracts.ViewModels
 {
     public class ClientViewModel
     {
+        [Column(title: "Номер", width: 100)]
         public int Id { get; set; }
-        [DisplayName("ФИО клиента")]
+        [Column(title: "Клиент", width: 150)]
         public string ClientFIO { get; set; }
-        [DisplayName("Логин")]
+        [Column(title: "Логин", width: 100)]
         public string Login { get; set; }
-        [DisplayName("Пароль")]
+        [Column(title: "Пароль", width: 100)]
         public string Password { get; set; }
     }
 }
