@@ -37,7 +37,7 @@ namespace TravelCompanyRestApi
             services.AddTransient<IMessageInfoLogic, MessageInfoLogic>();
             services.AddSingleton<AbstractMailWorker, MailKitWorker>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TravelCompanyRestApi", Version = "v1" });
