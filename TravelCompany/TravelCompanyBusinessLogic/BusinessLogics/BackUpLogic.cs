@@ -48,8 +48,6 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 // вытаскиваем список классов для сохранения 
                 var dbsets = _backUpInfo.GetFullList();
                 // берем метод для сохранения (из базвого абстрактного класса) 
-
-
                 MethodInfo method = GetType().GetTypeInfo().GetDeclaredMethod("SaveToFile");
                 foreach (var set in dbsets)
                 {

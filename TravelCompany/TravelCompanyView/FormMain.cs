@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
 using TravelCompanyBusinessLogic.BusinessLogics;
 using TravelCompanyContracts.BindingModels;
@@ -109,10 +110,8 @@ namespace TravelCompanyView
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _reportLogic.SaveTravelsToWordFile(new ReportBindingModel
-                {
-                    FileName = dialog.FileName
-                });
+                MethodInfo method = _reportLogic.GetType().GetMethod("SaveTravelsToWordFile");
+                method.Invoke(_reportLogic, new object[] { new ReportBindingModel { FileName = dialog.FileName } });
                 MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
             }
@@ -132,10 +131,8 @@ namespace TravelCompanyView
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
-                {
-                    FileName = dialog.FileName
-                });
+                MethodInfo method = _reportLogic.GetType().GetMethod("SaveWarehousesToWordFile");
+                method.Invoke(_reportLogic, new object[] { new ReportBindingModel { FileName = dialog.FileName } });
                 MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
             }

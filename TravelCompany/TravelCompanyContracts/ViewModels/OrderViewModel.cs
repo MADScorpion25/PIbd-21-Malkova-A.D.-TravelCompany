@@ -16,17 +16,17 @@ namespace TravelCompanyContracts.ViewModels
         public string ImplementerFIO { get; set; }
         [Column(title: "Клиент", width: 150)]
         public string ClientFIO { get; set; }
-        [Column(title: "Изделие", gridViewAutoSize: GridViewAutoSize.Fill)]
+        [Column(title: "Изделие", width: 150)]
         public string TravelName { get; set; }
         [Column(title: "Количество", width: 100)]
         public int Count { get; set; }
-        [Column(title: "Сумма", width: 50)]
+        [Column(title: "Сумма", width: 100, dateFormat: "C2")]
         public decimal Sum { get; set; }
         [Column(title: "Статус", width: 100)]
         public OrderStatus Status { get; set; }
-        [Column(title: "Дата создания", width: 100)]
+        [Column(title: "Дата создания", width: 100, dateFormat: "d")]
         public DateTime DateCreate { get; set; }
-        [Column(title: "Дата выполнения", width: 100)]
+        [Column(title: "Дата выполнения", width: 100, dateFormat: "d")]
         public DateTime? DateImplement { get; set; }
     }
 }

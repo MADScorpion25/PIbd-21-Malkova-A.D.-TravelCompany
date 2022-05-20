@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using TravelCompanyContracts.BindingModels;
@@ -36,7 +37,8 @@ namespace TravelCompanyView
         {
             try
             {
-                var dataSource = _logic.GetTotalOrders();
+                MethodInfo method = _logic.GetType().GetMethod("GetTotalOrders");
+                var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel { } });
                 var source = new ReportDataSource("TotalOrders", dataSource);
                 reportViewer.LocalReport.DataSources.Clear();
                 reportViewer.LocalReport.DataSources.Add(source);

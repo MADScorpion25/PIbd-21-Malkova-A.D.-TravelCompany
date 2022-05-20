@@ -27,7 +27,12 @@ namespace TravelCompanyView
         {
             try
             {
-                Program.ConfigGrid(logic.Read(null), dataGridView);
+                Program.ConfigGrid(logic.Read(new MessageInfoBindingModel
+                {
+                    ToSkip = currentPage * PAGE_SIZE,
+                    ToTake = PAGE_SIZE + 1
+                }), dataGridView);
+                PageLabel.Text = currentPage.ToString();
             }
             catch (Exception ex)
             {

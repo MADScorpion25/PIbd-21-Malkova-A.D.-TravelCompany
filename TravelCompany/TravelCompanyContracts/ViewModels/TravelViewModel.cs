@@ -10,7 +10,7 @@ namespace TravelCompanyContracts.ViewModels
         [Column(title: "Путевка", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string TravelName { get; set; }
 
-        [Column(title: "Цена", width: 50)]
+        [Column(title: "Цена", width: 100, dateFormat: "C2")]
         public decimal Price { get; set; }
         public Dictionary<int, (string, int)> TravelConditions { get; set; }
     }

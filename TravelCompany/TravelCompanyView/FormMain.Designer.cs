@@ -283,13 +283,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem WarehouseConditionToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem OrdersTotalToolStripMenuItem;
 
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemTravelCond;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOrders;
-        private System.Windows.Forms.ToolStripMenuItem conditionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TravelConditionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem OrdersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem TravelConditionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ordersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWork;
         private System.Windows.Forms.ToolStripMenuItem implementerToolStripMenuItem;

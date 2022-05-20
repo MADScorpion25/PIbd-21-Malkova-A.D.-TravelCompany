@@ -9,7 +9,7 @@ namespace TravelCompanyContracts.ViewModels
         public string MessageId { get; set; }
         [Column(title: "Отправитель", width: 100)]
         public string SenderName { get; set; }
-        [Column(title: "Дата письма", width: 50)]
+        [Column(title: "Дата письма", width: 50, dateFormat: "d")]
         public DateTime DateDelivery { get; set; }
         [Column(title: "Заголовок", width: 150)]
         public string Subject { get; set; }
