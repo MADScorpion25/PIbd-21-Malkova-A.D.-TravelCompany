@@ -14,7 +14,7 @@ namespace TravelCompanyRestApi.Controllers
         private readonly IOrderLogic _order;
         private readonly ITravelLogic _travel;
         private readonly IMessageInfoLogic _message;
-        private readonly int PAGE_SIZE = 4;
+        private readonly int page_size = 4;
         public MainController(IOrderLogic order, ITravelLogic travel, IMessageInfoLogic message)
         {
             _order = order;
@@ -37,12 +37,12 @@ namespace TravelCompanyRestApi.Controllers
              var list = _message.Read(new MessageInfoBindingModel
             {
                 ClientId = clientId,
-                ToSkip = (page - 1) * PAGE_SIZE,
-                ToTake = PAGE_SIZE + 1
+                ToSkip = (page - 1) * page_size,
+                ToTake = page_size + 1
             })
                 .ToList();
-            var hasNext = !(list.Count() <= PAGE_SIZE);
-            return (list.Take(PAGE_SIZE).ToList(), hasNext);
+            var hasNext = !(list.Count() <= page_size);
+            return (list.Take(page_size).ToList(), hasNext);
         }
     }
 }
