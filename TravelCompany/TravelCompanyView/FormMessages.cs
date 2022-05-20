@@ -10,7 +10,7 @@ namespace TravelCompanyView
     public partial class FormMessages : Form
     {
         private bool hasNext = false;
-        private readonly int PAGE_SIZE = 4;
+        private readonly int page_size = 4;
         private int currentPage = 0;
         private readonly IMessageInfoLogic logic;
         public FormMessages(IMessageInfoLogic logic)
@@ -29,10 +29,21 @@ namespace TravelCompanyView
             {
                 Program.ConfigGrid(logic.Read(new MessageInfoBindingModel
                 {
-                    ToSkip = currentPage * PAGE_SIZE,
-                    ToTake = PAGE_SIZE + 1
+                    ToSkip = currentPage * page_size,
+                    ToTake = page_size + 1
                 }), dataGridView);
                 PageLabel.Text = currentPage.ToString();
+                hasNext = !(dataGridView.Rows.Count <= page_size);
+                if (hasNext)
+                {
+                    ButtonNext.Text = "Next " + (currentPage + 2);
+                    ButtonNext.Enabled = true;
+                }
+                else
+                {
+                    ButtonNext.Text = "Next";
+                    ButtonNext.Enabled = false;
+                }
             }
             catch (Exception ex)
             {
