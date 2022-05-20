@@ -15,5 +15,7 @@ namespace TravelCompanyDatabaseImplement.Models
         public string Password { get; set; }
         [ForeignKey("ClientId")]
         public List<Order> Orders { get; set; }
+        [ForeignKey("ClientId")]
+        public List<MessageInfo> MessageInfoes { get; set; }
     }
 }

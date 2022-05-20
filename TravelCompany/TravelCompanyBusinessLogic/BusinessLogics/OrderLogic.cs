@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TravelCompanyBusinessLogic.MailWorker;
 using TravelCompanyContracts.BindingModels;
 using TravelCompanyContracts.BusinessLogicsContracts;
 using TravelCompanyContracts.Enums;
@@ -11,9 +12,13 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        public OrderLogic(IOrderStorage orderStorage)
+        private readonly IClientStorage _clientStorage;
+        private readonly AbstractMailWorker _mailWorker;
+        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage, AbstractMailWorker mailWorker)
         {
             _orderStorage = orderStorage;
+            _clientStorage = clientStorage;
+            _mailWorker = mailWorker;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -25,6 +30,15 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят
+            });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = model.ClientId
+                })?.Login,
+                Subject = $"Новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
             });
         }
 
@@ -51,6 +65,15 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 Status = OrderStatus.Выдан,
                 ImplementerId = order.ImplementerId
             });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Login,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} выдан."
+            });
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -75,6 +98,15 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 DateImplement = DateTime.Now,
                 Status = OrderStatus.Готов,
                 ImplementerId = model.ImplementerId
+            });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Login,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} выполнен."
             });
         }
 
@@ -113,6 +145,15 @@ namespace TravelCompanyBusinessLogic.BusinessLogics
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Выполняется,
                 ImplementerId = model.ImplementerId
+            });
+            _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Login,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} передан в работу."
             });
         }
     }

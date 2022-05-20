@@ -4,7 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using TravelCompanyBusinessLogic.BusinessLogics;
+using TravelCompanyBusinessLogic.MailWorker;
+using TravelCompanyContracts.BindingModels;
 using TravelCompanyContracts.BusinessLogicsContracts;
 using TravelCompanyContracts.StorageContracts;
 using TravelCompanyDatabaseImplement.Implements;
@@ -26,9 +29,14 @@ namespace TravelCompanyRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<ITravelStorage, TravelStorage>();
+            services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
+
             services.AddTransient<IOrderLogic, OrderLogic>();
             services.AddTransient<IClientLogic, ClientLogic>();
             services.AddTransient<ITravelLogic, TravelLogic>();
+            services.AddTransient<IMessageInfoLogic, MessageInfoLogic>();
+            services.AddSingleton<AbstractMailWorker, MailKitWorker>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +64,17 @@ namespace TravelCompanyRestApi
             {
                 endpoints.MapControllers();
             });
+            var mailSender = app.ApplicationServices.GetService<AbstractMailWorker>();
+            mailSender.MailConfig(new MailConfigBindingModel
+            {
+                MailLogin = Configuration["MailLogin"].ToString(),
+                MailPassword = Configuration["MailPassword"].ToString(),
+                SmtpClientHost = Configuration["SmtpClientHost"].ToString(),
+                SmtpClientPort = Convert.ToInt32(Configuration["SmtpClientPort"]),
+                PopHost = Configuration["PopHost"].ToString(),
+                PopPort = Convert.ToInt32(Configuration["PopPort"].ToString())
+            });
+
         }
     }
 }

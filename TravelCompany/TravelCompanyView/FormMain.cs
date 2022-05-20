@@ -33,9 +33,13 @@ namespace TravelCompanyView
                     mainItem.DropDownItems[1].Click += conditionTravelsToolStripMenuItem_Click;
                     mainItem.DropDownItems[2].Click += ordersListToolStripMenuItem_Click;
                 }
-                else
+                else if(mainItem.Text.Equals("Запуск работы"))
                 {
                     mainItem.Click += startWorkToolStripMenuItem_Click; 
+                }
+                else
+                {
+                    mainItem.Click += showMessagesToolStripMenuItem_Click;
                 }
             }
         }
@@ -118,7 +122,11 @@ namespace TravelCompanyView
             MessageBox.Show("Работы запущены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
+        private void showMessagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormMessages>();
+            form.ShowDialog();
+        }
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();
