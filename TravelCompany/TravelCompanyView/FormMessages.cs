@@ -31,9 +31,8 @@ namespace TravelCompanyView
                 {
                     ToSkip = currentPage * page_size,
                     ToTake = page_size + 1
-                }), dataGridView);
-                PageLabel.Text = currentPage.ToString();
-                hasNext = !(dataGridView.Rows.Count <= page_size);
+                });
+                hasNext = !(list.Count <= page_size);
                 if (hasNext)
                 {
                     ButtonNext.Text = "Next " + (currentPage + 2);
@@ -43,6 +42,10 @@ namespace TravelCompanyView
                 {
                     ButtonNext.Text = "Next";
                     ButtonNext.Enabled = false;
+                }
+                if (list != null)
+                {
+                    dataGridView.DataSource = list.Take(page_size).ToList();
                 }
             }
             catch (Exception ex)
