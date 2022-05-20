@@ -27,26 +27,7 @@ namespace TravelCompanyView
         {
             try
             {
-                var list = logic.Read(new MessageInfoBindingModel
-                {
-                    ToSkip = currentPage * PAGE_SIZE,
-                    ToTake = PAGE_SIZE + 1
-                });
-                hasNext = !(list.Count <= PAGE_SIZE);
-                if (hasNext)
-                {
-                    ButtonNext.Text = "Next " + (currentPage + 2);
-                    ButtonNext.Enabled = true;
-                }
-                else
-                {
-                    ButtonNext.Text = "Next";
-                    ButtonNext.Enabled = false;
-                }
-                if (list != null)
-                {
-                    dataGridView.DataSource = list.Take(PAGE_SIZE).ToList();
-                }
+                Program.ConfigGrid(logic.Read(null), dataGridView);
             }
             catch (Exception ex)
             {

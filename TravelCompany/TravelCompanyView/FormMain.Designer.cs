@@ -53,6 +53,7 @@ namespace TravelCompanyView
             this.clientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStartWork = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemMessage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemBackUp = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -105,7 +106,8 @@ namespace TravelCompanyView
             this.addWarehouse,
             this.toolStripMenuItemRep,
             this.toolStripMenuItemStartWork,
-            this.toolStripMenuItemMessage});
+            this.toolStripMenuItemMessage,
+            this.toolStripMenuItemBackUp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1252, 28);
@@ -232,6 +234,12 @@ namespace TravelCompanyView
             this.toolStripMenuItemMessage.Size = new System.Drawing.Size(105, 24);
             this.toolStripMenuItemMessage.Text = "Сообщения";
             // 
+            // toolStripMenuItemBackUp
+            // 
+            this.toolStripMenuItemBackUp.Name = "toolStripMenuItemBackUp";
+            this.toolStripMenuItemBackUp.Size = new System.Drawing.Size(122, 24);
+            this.toolStripMenuItemBackUp.Text = "Создать бэкап";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -286,6 +294,7 @@ namespace TravelCompanyView
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWork;
         private System.Windows.Forms.ToolStripMenuItem implementerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMessage;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemBackUp;
     }
 }
 
