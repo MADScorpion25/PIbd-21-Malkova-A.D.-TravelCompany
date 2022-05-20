@@ -111,7 +111,7 @@ namespace TravelCompanyDatabaseImplement.Implements
                 DateCreate = model.DateCreate,
                 DateImplement = model.DateImplement,
                 ImplementerId = model.ImplementerId
-        };
+            };
             context.Orders.Add(order);
             context.SaveChanges();
             CreateModel(model, order);
