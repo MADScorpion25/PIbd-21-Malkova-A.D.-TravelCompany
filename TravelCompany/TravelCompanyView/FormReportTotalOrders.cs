@@ -61,6 +61,11 @@ namespace TravelCompanyView
                     {
                         FileName = dialog.FileName,
                     });
+                    MethodInfo method = _logic.GetType().GetMethod("SaveTotalOrdersToPdfFile");
+                    var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel 
+                    {
+                        FileName = dialog.FileName
+                    } });
                     MessageBox.Show("Выполнено", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

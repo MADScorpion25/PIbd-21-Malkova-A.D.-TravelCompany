@@ -75,12 +75,13 @@ dateTimePickerTo.Value.ToShortDateString()) };
             {
                 try
                 {
-                    _logic.SaveOrdersToPdfFile(new ReportBindingModel
+                    MethodInfo method = _logic.GetType().GetMethod("SaveOrdersToPdfFile");
+                    var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel
                     {
                         FileName = dialog.FileName,
                         DateFrom = dateTimePickerFrom.Value,
                         DateTo = dateTimePickerTo.Value
-                    });
+                    } });
                     MessageBox.Show("Выполнено", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
