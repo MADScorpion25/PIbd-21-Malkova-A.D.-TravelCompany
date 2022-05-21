@@ -1,6 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
+using TravelCompanyContracts.Attributes;
 using TravelCompanyContracts.Enums;
 
 namespace TravelCompanyContracts.ViewModels
@@ -8,23 +7,17 @@ namespace TravelCompanyContracts.ViewModels
     public class MessageInfoViewModel
     {
         public string MessageId { get; set; }
-        [DataMember]
-        [DisplayName("Отправитель")]
+        [Column(title: "Отправитель", width: 100)]
         public string SenderName { get; set; }
-        [DataMember]
-        [DisplayName("Дата письма")]
+        [Column(title: "Дата письма", width: 50, dateFormat: "d")]
         public DateTime DateDelivery { get; set; }
-        [DataMember]
-        [DisplayName("Заголовок")]
+        [Column(title: "Заголовок", width: 150)]
         public string Subject { get; set; }
-        [DataMember]
-        [DisplayName("Текст")]
+        [Column(title: "Текст", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string Body { get; set; }
-        [DataMember]
-        [DisplayName("Статус")]
+        [Column(title: "Статус", width: 50)]
         public MessageStatus MessageStatus { get; set; }
-        [DataMember]
-        [DisplayName("Ответ")]
+        [Column(title: "Ответ", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string ReplyText { get; set; }
     }
 }

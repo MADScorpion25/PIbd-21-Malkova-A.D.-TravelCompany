@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using TravelCompanyContracts.BindingModels;
 using TravelCompanyContracts.BusinessLogicsContracts;
+using TravelCompanyContracts.ViewModels;
 
 namespace TravelCompanyView
 {
@@ -26,11 +28,11 @@ namespace TravelCompanyView
             {
                 try
                 {
-                    _logic.SaveWarehouseConditionToExcelFile(new
-                    ReportBindingModel
+                    MethodInfo method = _logic.GetType().GetMethod("SaveWarehouseConditionToExcelFile");
+                    var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel
                     {
                         FileName = dialog.FileName
-                    });
+                    } });
                     MessageBox.Show("Выполнено", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -46,7 +48,8 @@ namespace TravelCompanyView
         {
             try
             {
-                var dict = _logic.GetWarehouseConditions();
+                MethodInfo method = _logic.GetType().GetMethod("GetWarehouseConditions");
+                var dict = (List<ReportWarehouseConditionViewModel>)method.Invoke(_logic, new object[] { });
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();

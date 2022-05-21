@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using TravelCompanyContracts.BindingModels;
 using TravelCompanyContracts.BusinessLogicsContracts;
+using TravelCompanyContracts.ViewModels;
 
 namespace TravelCompanyView
 {
@@ -21,11 +24,11 @@ namespace TravelCompanyView
             {
                 try
                 {
-                    _logic.SaveTravelConditionToExcelFile(new
-                    ReportBindingModel
+                    MethodInfo method = _logic.GetType().GetMethod("SaveTravelConditionToExcelFile");
+                    var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel
                     {
                         FileName = dialog.FileName
-                    });
+                    } });
                     MessageBox.Show("Выполнено", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -42,7 +45,8 @@ namespace TravelCompanyView
         {
             try
             {
-                var dict = _logic.GetTravelCondition();
+                MethodInfo method = _logic.GetType().GetMethod("GetTravelCondition");
+                var dict = (List<ReportTravelConditionViewModel>)method.Invoke(_logic, new object[] { });
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();

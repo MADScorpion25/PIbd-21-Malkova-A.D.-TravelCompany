@@ -1,6 +1,7 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using TravelCompanyContracts.BindingModels;
 using TravelCompanyContracts.BusinessLogicsContracts;
@@ -37,11 +38,12 @@ namespace TravelCompanyView
             }
             try
             {
-                var dataSource = _logic.GetOrders(new ReportBindingModel
+                MethodInfo method = _logic.GetType().GetMethod("GetOrders");
+                var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel
                 {
                     DateFrom = dateTimePickerFrom.Value,
                     DateTo = dateTimePickerTo.Value
-                });
+                } });
                 var source = new ReportDataSource("DataSetOrders", dataSource);
                 reportViewer.LocalReport.DataSources.Clear();
                 reportViewer.LocalReport.DataSources.Add(source);
@@ -73,12 +75,13 @@ dateTimePickerTo.Value.ToShortDateString()) };
             {
                 try
                 {
-                    _logic.SaveOrdersToPdfFile(new ReportBindingModel
+                    MethodInfo method = _logic.GetType().GetMethod("SaveOrdersToPdfFile");
+                    var dataSource = method.Invoke(_logic, new object[] { new ReportBindingModel
                     {
                         FileName = dialog.FileName,
                         DateFrom = dateTimePickerFrom.Value,
                         DateTo = dateTimePickerTo.Value
-                    });
+                    } });
                     MessageBox.Show("Выполнено", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
